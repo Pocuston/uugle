@@ -1,25 +1,26 @@
 {
   "name": "uuGle",
+  "version": "0.0.1",
+  "omnibox": { "keyword" : "uu" },
   "options_page": "options.html",
   "background": {
     "page": "background.html"
   },
-  "browser_action": {
+  "page_action": {
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
   },
-  "chrome_url_overrides": {
-    "newtab": "newtab.html"
-  },
+  "permissions": [ "activeTab", "declarativeContent", "https://uuos9.plus4u.net/uu-bookkitg01-main/*" ],
   "icons": {
     "128": "icon-128.png"
   },
   "content_scripts": [{
-    "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+    "matches": ["https://uuos9.plus4u.net/uu-bookkitg01-main/*"],
     "js": ["contentScript.bundle.js"],
     "css": ["content.styles.css"]
   }],
   "web_accessible_resources": [
+    "inject.bundle.js",
     "content.styles.css",
     "icon-128.png",
     "icon-34.png"

@@ -1,3 +1,16 @@
+# uuGle
+
+## Usage
+1. Plugin automatically indexes every bookkit book opened. 
+1. Type "uu" in search bar to switch to uuGle fulltext search in indexed books.
+## Constraints
+
+## Road map
+1. Book already indexed will be automatically re-indexed. Based on some timestamp from book data or simple time.
+1. GUI to control book indexing - delete index, reindex single book etc.
+1. Add breadcrumb path from menu to page name
+
+# Development
 # Chrome Extension Boilerplate with React 16.13 and Webpack 4
 
 [![npm](https://img.shields.io/npm/v/chrome-extension-boilerplate-react)](https://www.npmjs.com/package/chrome-extension-boilerplate-react)
