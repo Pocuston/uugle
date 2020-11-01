@@ -1,9 +1,18 @@
 # uuGle
 
 ## Usage
+
+### Install plug-in
+Plugin is not in official Chrome store yet, so it must be installed from zip file using this guide. 
+
 1. Plugin automatically indexes every bookkit book opened. 
 1. Type "uu" in search bar to switch to uuGle fulltext search in indexed books.
+
 ## Constraints
+1. Only page name (no page content) is being indexed.
+1. Only book primary language is being indexed.
+1. Performance test with large number of books need to be done.
+1. There is no GUI to control indexed content so far.  
 
 ## Road map
 1. Book already indexed will be automatically re-indexed. Based on some timestamp from book data or simple time.

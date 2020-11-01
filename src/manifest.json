@@ -2,15 +2,10 @@
   "name": "uuGle",
   "version": "0.0.1",
   "omnibox": { "keyword" : "uu" },
-  "options_page": "options.html",
   "background": {
     "page": "background.html"
   },
-  "page_action": {
-    "default_popup": "popup.html",
-    "default_icon": "icon-34.png"
-  },
-  "permissions": [ "activeTab", "declarativeContent", "https://uuos9.plus4u.net/uu-bookkitg01-main/*" ],
+  "permissions": [ "https://uuos9.plus4u.net/uu-bookkitg01-main/*" ],
   "icons": {
     "128": "icon-128.png"
   },
