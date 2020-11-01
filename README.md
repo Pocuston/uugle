@@ -1,23 +1,41 @@
 # uuGle
 
-## Usage
+**uuGle** Chrome extension provides fast and user-friendly searching across Unicorn bookkit books. It uses [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+ and [Elasticlunr.js](http://elasticlunr.com/) for book indexing and searching.
 
-### Install plug-in
-Plugin is not in official Chrome store yet, so it must be installed from zip file using this guide. 
+### Install extension
+Plugin is not available in official Chrome store yet, so it must be installed from local directory.
+1. Download extension package from and extract it. 
+1. Go to [chrome://extensions/](chrome://extensions/)
+1. Turn on *Developer mode*
+1. Use Load *Unpacked button* and point to directory with extracted package from pont 1.
 
-1. Plugin automatically indexes every bookkit book opened. 
-1. Type "uu" in search bar to switch to uuGle fulltext search in indexed books.
+## Usage 
+
+1. **uuGle** automatically indexes every book you open. Just open any single page and whole book content will be indexed. 
+1. Type "*uu*" in search bar to switch to **uuGle** fulltext search in indexed books.
+1. Once in **uuGle** search mode, type any word from page or book title. Most relevant searches are being instantly suggested as you type.
+    - You don't need to type whole word, search results are automatically expanded for you.
+    - Suggestions are sorted from the most relevant at the top.
+    - For each suggestion you can see target book page URL.
+    - After **uuGle** suggestions list of othe common Chrome suggestions follows.
+    **uuGle** does not replace default search bar behavior.
+1. When you select suggestion, corresponding book page will open in currently active browser tab.
 
 ## Constraints
+This is first released version with following limitations:   
 1. Only page name (no page content) is being indexed.
-1. Only book primary language is being indexed.
+1. Only english language fulltext search is supported.
+1. Every book is indexed only once at the moment. Re-indexation need to be implemented to reflect future book content changes.  
 1. Performance test with large number of books need to be done.
-1. There is no GUI to control indexed content so far.  
+1. There is no GUI to manage indexing and indexed content.
+1. Better icon should be provided to distinguish uuGle and common suggestions. 
 
 ## Road map
-1. Book already indexed will be automatically re-indexed. Based on some timestamp from book data or simple time.
+1. Book already indexed will be automatically re-indexed to reflect book content changes. Based on some timestamp from book data or simple time.
 1. GUI to control book indexing - delete index, reindex single book etc.
-1. Add breadcrumb path from menu to page name
+1. Add breadcrumb path from menu to page name.
+1. ...
 
 # Development
 # Chrome Extension Boilerplate with React 16.13 and Webpack 4
