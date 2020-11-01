@@ -5,7 +5,7 @@
 
 ### Install extension
 Plugin is not available in official Chrome store yet, so it must be installed from local directory.
-1. Download extension package from and extract it. 
+1. Download extension package from [here](https://github.com/Pocuston/uugle/releases/tag/0.0.1) and extract it. 
 1. Go to [chrome://extensions/](chrome://extensions/)
 1. Turn on *Developer mode*
 1. Use Load *Unpacked button* and point to directory with extracted package from pont 1.
