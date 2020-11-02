@@ -5,12 +5,12 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": [ "https://uuos9.plus4u.net/uu-bookkitg01-main/*" ],
+  "permissions": [ "https://*.plus4u.net/uu-bookkitg01-main/*", "https://*.plus4u.net/uu-dockitg01-main/*" ],
   "icons": {
     "128": "icon-128.png"
   },
   "content_scripts": [{
-    "matches": ["https://uuos9.plus4u.net/uu-bookkitg01-main/*"],
+    "matches": ["https://*.plus4u.net/uu-bookkitg01-main/*", "https://*.plus4u.net/uu-dockitg01-main/*"],
     "js": ["contentScript.bundle.js"],
     "css": ["content.styles.css"]
   }],
