@@ -37,6 +37,16 @@ let index = null;
  * @param bookData
  */
 export async function indexBook(bookData) {
+  function getBookBaseUrl(pageUrl) {
+    const bookBaseUrlRexExp = /https:\/\/[a-zA-Z0-9]+\.plus4u.net\/(uu-dockitg01-main|uu-bookkit-maing01|uu-bookkitg01-main)\/.+\/book/;
+    const matches = pageUrl.match(bookBaseUrlRexExp);
+    if (!matches || matches.length === 0) {
+      throw new Error("uuGle: invalid bookkit page url");
+    }
+
+    return matches[0];
+  }
+
   const db = await openDb();
   const transaction = db.transaction(
     [booksScheme, pagesScheme, indexScheme],
@@ -49,15 +59,17 @@ export async function indexBook(bookData) {
 
   //TODO 2: promazani stranek a indexu pokud uz je knizka zaindexovana
   //TODO 2: podminene indexovani podle casove platnosti nebo timestampu
-  //TODO 3: zaindexovat i asid?
 
-  const book = getBookObject(bookData.loadBook);
+  const bookUrl = getBookBaseUrl(bookData.url);
+  const book = getBookObject(bookData.loadBook, bookUrl);
   const booksStore = transaction.objectStore(booksScheme);
 
   //Check if the book has been already indexed
-  const bookKey = await requestToPromise(booksStore.getKey(book.awid));
+  const bookKey = await requestToPromise(booksStore.getKey(bookUrl));
   if (!!bookKey) {
-    console.log("uuGle: book has been already indexed, skipping..");
+    console.log(
+      "uuGle: book `" + book.name + "` has been already indexed, skipping.."
+    );
     return;
   }
 
@@ -66,7 +78,7 @@ export async function indexBook(bookData) {
 
   //Store each book page
   const pagesStore = transaction.objectStore(pagesScheme);
-  const pageList = getPageList(bookData);
+  const pageList = getPageList(bookData, bookUrl);
 
   await Promise.all(
     pageList.map((page) => {
@@ -101,8 +113,7 @@ export async function search(query, suggest) {
    * Creates chrome omnibox suggestion
    * @param page
    */
-  function getSuggestion({ code, awid, name }) {
-    const url = `https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-${awid}/book/page?code=${code}`;
+  function getSuggestion({ url, name }) {
     return {
       content: url,
       description: `${escapeHtml(name)} - <url>${url}</url>`,
@@ -235,13 +246,13 @@ async function openDb() {
   request.onupgradeneeded = (event) => {
     const db = event.target.result;
 
-    db.createObjectStore(booksScheme, { keyPath: "awid" });
+    db.createObjectStore(booksScheme, { keyPath: "url" });
 
     const pageStore = db.createObjectStore(pagesScheme, {
       autoIncrement: true,
       keyPath: "id",
     });
-    pageStore.createIndex("unique awid+code", ["awid", "code"], {
+    pageStore.createIndex("unique url", "url", {
       unique: true,
     });
 
@@ -261,24 +272,23 @@ async function openDb() {
   });
 }
 
-function getBookObject(bookData) {
-  const { primaryLanguage, awid, name } = bookData;
+function getBookObject(bookData, bookUrl) {
+  const { primaryLanguage, name } = bookData;
   return {
-    awid,
+    url: bookUrl,
     name: name[primaryLanguage],
   };
 }
 
-function getPageList(bookData) {
-  const { name, primaryLanguage, awid } = bookData.loadBook;
+function getPageList(bookData, bookUrl) {
+  const { name, primaryLanguage } = bookData.loadBook;
   const { itemMap } = bookData.getBookStructure;
 
   //TODO doplnit cestu
   return Object.entries(itemMap).map((itemPair) => {
     const [key, item] = itemPair;
     return {
-      code: key,
-      awid,
+      url: `${bookUrl}/page?code=${key}`,
       name: name[primaryLanguage] + " > " + item.label[primaryLanguage],
     };
   });

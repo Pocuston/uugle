@@ -1,8 +1,12 @@
 //TODO rename to content.js
 console.log("uuGle: content script started");
 
+/**
+ * We listen for event from inject.js script, who sends us loaded book data.
+ * We add current page URL to this data and send message to background script.
+ */
 document.addEventListener("uuGle:bookRetrieved", function (e) {
-  const data = JSON.parse(e.detail);
+  const data = { ...JSON.parse(e.detail), url: location.href };
   console.log("uuGle: received book data from inject script", data);
   chrome.runtime.sendMessage({ messageType: "bookDataRetrieved", data: data });
 });
