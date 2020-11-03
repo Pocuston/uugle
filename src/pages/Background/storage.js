@@ -82,14 +82,11 @@ export async function indexBook(bookData) {
 
   await Promise.all(
     pageList.map((page) => {
-      return new Promise((resolve) => {
-        const request = pagesStore.add(page);
-        request.onsuccess = (event) => {
-          //Add each book page to index
-          const pageId = event.target.result;
-          index.addDoc({ id: pageId, name: page.name });
-          resolve();
-        };
+      return new Promise(async (resolve) => {
+        const pageId = await requestToPromise(pagesStore.add(page));
+        const indexDoc = { id: pageId, name: page.name };
+        index.addDoc(indexDoc);
+        resolve();
       });
     })
   );
@@ -151,11 +148,8 @@ export async function search(query, suggest) {
     return;
   }
 
-  console.log("uuGle: searching results for `" + query + "`");
-
   //First, we search index for page ids
   let indexResults = index.search(query, { expand: true });
-  console.log("uuGle: result from index:", indexResults);
   if (indexResults.length === 0) {
     suggest([]);
     return;
@@ -175,28 +169,22 @@ export async function search(query, suggest) {
   const pagesStore = transaction.objectStore(pagesScheme);
 
   //Since get requests run in parallel we must wait for all of them
-  try {
-    const suggestions = await Promise.all(
-      indexResults.map((result) => {
-        return new Promise((resolve, reject) => {
-          const request = pagesStore.get(parseInt(result.ref));
-          request.onsuccess = () => {
-            const page = request.result;
-            resolve(getSuggestion(page));
-          };
-          request.onerror = () => {
-            console.error("uuGle: error loading page:", result.ref);
-            reject("uuGle: error loading page");
-          };
+  const suggestions = await Promise.all(
+    indexResults.map((indexDoc) => {
+      return requestToPromise(pagesStore.get(parseInt(indexDoc.ref)))
+        .then((result) => {
+          const page = result;
+          return getSuggestion(page);
+        })
+        .catch((error) => {
+          console.error("uuGle: error loading page:", indexDoc.ref, error);
         });
-      })
-    );
-    console.log("uuGle: suggestions:", suggestions);
-    //We call suggest method from chrome.omnibox to suggest results
-    suggest(suggestions);
-  } catch (e) {
-    console.error("uuGle: error loading suggested pages", e);
-  }
+    })
+  );
+
+  console.log("uuGle: suggestions for '" + query + "' :", suggestions);
+  //We call suggest method from chrome.omnibox to suggest results
+  suggest(suggestions);
 }
 
 /**
@@ -210,29 +198,23 @@ export async function initialize() {
     console.error("uuGle: page index load error", transaction.error);
   };
 
-  //TODO indexStore.get prepsat na async/await
   const indexStore = transaction.objectStore(indexScheme);
-  const request = indexStore.get(indexObjectId);
-  request.onsuccess = (event) => {
-    if (!request.result) {
-      index = elasticlunr(function () {
-        this.setRef("id");
-        this.addField("name");
-        this.saveDocument(saveDocumentInIndex);
-      });
-      console.log("uuGle: index not found in db");
-      console.log("uuGle: creating new empty index");
-      return;
-    }
+  const indexObject = await requestToPromise(indexStore.get(indexObjectId));
 
-    const { indexDump } = request.result;
-    const indexObject = JSON.parse(indexDump);
-    index = elasticlunr.Index.load(indexObject);
-    console.log("uuGle: index successfully loaded from database");
-  };
-  request.onerror = (event) => {
-    console.error("uuGle: index load error", event);
-  };
+  if (!indexObject) {
+    index = elasticlunr(function () {
+      this.setRef("id");
+      this.addField("name");
+      this.saveDocument(saveDocumentInIndex);
+    });
+    console.log("uuGle: index not found in db");
+    console.log("uuGle: creating new empty index");
+    return;
+  }
+
+  const { indexDump } = indexObject;
+  index = elasticlunr.Index.load(JSON.parse(indexDump));
+  console.log("uuGle: index successfully loaded from database");
 }
 
 /**
