@@ -22,7 +22,10 @@ const saveDocumentInIndex = false;
 //Extend default elasticlunr separators by "." to allow search e.g. "accordion" in "UU5.Bricks.Accordion"
 elasticlunr.tokenizer.setSeperator(/[\s\-./]+/);
 
-//Fulltext index must be initialized first by calling the initialize()
+/**
+ * In-memory fulltext index.
+ * It must be initialized first by calling the initialize().
+ */
 let index = null;
 
 //TODO overit vykon:
@@ -30,7 +33,6 @@ let index = null;
 //TODO velikost indexu pro knizku
 //TODO velikost pameti pro knizku
 //TODO mereni casu: indexBook, initialize
-//TODO optimalizace: neukladat index jako string ale objekt
 
 /**
  * Indexes book
@@ -80,6 +82,10 @@ export async function indexBook(bookData) {
   const pagesStore = transaction.objectStore(pagesScheme);
   const pageList = getPageList(bookData, bookUrl);
 
+  //Before we add pages to index, we synchronize in-memory index with db
+  index = await loadIndexFromDb(transaction);
+
+  //Every page is put to object store and added to index
   await Promise.all(
     pageList.map((page) => {
       return new Promise(async (resolve) => {
@@ -195,26 +201,36 @@ export async function initialize() {
   const db = await openDb();
   const transaction = db.transaction([indexScheme]);
   transaction.onerror = () => {
-    console.error("uuGle: page index load error", transaction.error);
+    console.error("uuGle: index load error", transaction.error);
   };
 
+  index = await loadIndexFromDb(transaction);
+  console.log("uuGle: index initialized");
+}
+
+/**
+ * Loads index from serialized dump in db.
+ * @param transaction IDBTransaction
+ */
+async function loadIndexFromDb(transaction) {
   const indexStore = transaction.objectStore(indexScheme);
   const indexObject = await requestToPromise(indexStore.get(indexObjectId));
 
   if (!indexObject) {
-    index = elasticlunr(function () {
+    let index = elasticlunr(function () {
       this.setRef("id");
       this.addField("name");
       this.saveDocument(saveDocumentInIndex);
     });
     console.log("uuGle: index not found in db");
     console.log("uuGle: creating new empty index");
-    return;
+    return index;
   }
 
   const { indexDump } = indexObject;
-  index = elasticlunr.Index.load(JSON.parse(indexDump));
+  let index = elasticlunr.Index.load(JSON.parse(indexDump));
   console.log("uuGle: index successfully loaded from database");
+  return index;
 }
 
 /**
