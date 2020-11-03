@@ -1,34 +1,37 @@
 # uuGle
 
-**uuGle** Chrome extension provides fast and user-friendly searching across Unicorn bookkit books. It uses [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
- and [Elasticlunr.js](http://elasticlunr.com/) for book indexing and searching.
+**uuGle** Chrome extension provides fast and user-friendly searching across Unicorn bookkit and dockit books through browser search bar.
+
+## Usage 
+
+1. **uuGle** automatically indexes every Unicorn bookkit book you open. Just open a single page of any book, and a list of all the pages
+    in that book will be indexed and available for search anytime in the future.
+    
+    *Note*: **uuGle** *indexes only page titles, not whole page content*.
+     
+1. Type "*uu*" in search bar on any browser tab to switch to **uuGle** search in indexed books. Once in **uuGle** search mode, type any word from page or book title. Most relevant searches are being instantly suggested as you type.
+    - You don't need to type whole word, search results are automatically expanded for you (e.g. type just "trans" and search results containing word "transaction" will be suggested).
+    - Suggestions are sorted from the most relevant at the top.
+    - For each suggestion you can see target book page URL.
+    
+1. Select suggestion and the corresponding book page will open in currently active browser tab.
+
+Book pages index is permanently stored in the browser's [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) database. **uuGle** uses
+[Elasticlunr.js](http://elasticlunr.com/) for fast and user friendly searching.
 
 ### Install extension
 Plugin is not available in official Chrome store yet, so it must be installed from local directory.
-1. Download extension package from [here](https://github.com/Pocuston/uugle/releases/tag/0.0.1) and extract it. 
+1. Download extension package from [latest release](https://github.com/Pocuston/uugle/releases/) and extract it to empty directory. 
 1. Go to [chrome://extensions/](chrome://extensions/)
 1. Turn on *Developer mode*
 1. Use Load *Unpacked button* and point to directory with extracted package from pont 1.
 
-## Usage 
-
-1. **uuGle** automatically indexes every book you open. Just open any single page and whole book content will be indexed. 
-1. Type "*uu*" in search bar to switch to **uuGle** fulltext search in indexed books.
-1. Once in **uuGle** search mode, type any word from page or book title. Most relevant searches are being instantly suggested as you type.
-    - You don't need to type whole word, search results are automatically expanded for you.
-    - Suggestions are sorted from the most relevant at the top.
-    - For each suggestion you can see target book page URL.
-    - After **uuGle** suggestions list of othe common Chrome suggestions follows.
-    **uuGle** does not replace default search bar behavior.
-1. When you select suggestion, corresponding book page will open in currently active browser tab.
-
-## Constraints
-This is first released version with following limitations:   
-1. Only page name (no page content) is being indexed.
+## Constraints   
+1. Only page title is being indexed. Searching page content is not available.
 1. Only english language fulltext search is supported.
-1. Every book is indexed only once at the moment. Re-indexation need to be implemented to reflect future book content changes.  
+1. Every book is indexed only once at the moment. Re-indexation need to be implemented to reflect book content changes.  
 1. Performance test with large number of books need to be done.
-1. There is no GUI to manage indexing and indexed content.
+1. There is no GUI to manage indexing and indexed content so far.
 1. Better icon should be provided to distinguish uuGle and common suggestions. 
 
 ## Road map
