@@ -13,9 +13,11 @@
     "@types/chrome": "0.0.104",
     "@types/react": "^16.9.26",
     "elasticlunr": "^0.9.5",
+    "lodash": ">=4.17.19",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hot-loader": "^4.12.20"
+    "react-hot-loader": "^4.12.20",
+    "serialize-javascript": ">=3.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -39,6 +41,7 @@
     "fs-extra": "^9.0.0",
     "html-loader": "0.5.5",
     "html-webpack-plugin": "^4.0.2",
+    "node-forge": ">=0.10.0",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.2",
     "sass-loader": "^8.0.2",
