@@ -40,10 +40,10 @@ let index = null;
  */
 export async function indexBook(bookData) {
   function getBookBaseUrl(pageUrl) {
-    const bookBaseUrlRexExp = /https:\/\/[a-zA-Z0-9]+\.plus4u.net\/(uu-dockitg01-main|uu-bookkit-maing01|uu-bookkitg01-main)\/.+\/book/;
+    const bookBaseUrlRexExp = /https:\/\/[a-zA-Z0-9]+\.plus4u.net\/(uu-dockitg01-main|uu-bookkit-maing01|uu-bookkitg01-main)\/[a-z0-9-]+/;
     const matches = pageUrl.match(bookBaseUrlRexExp);
     if (!matches || matches.length === 0) {
-      throw new Error("uuGle: invalid bookkit page url");
+      throw new Error("uuGle: invalid bookkit page url: " + pageUrl);
     }
 
     return matches[0];
@@ -286,7 +286,7 @@ function getPageList(bookData, bookUrl) {
   return Object.entries(itemMap).map((itemPair) => {
     const [key, item] = itemPair;
     return {
-      url: `${bookUrl}/page?code=${key}`,
+      url: `${bookUrl}/book/page?code=${key}`,
       name: name[primaryLanguage] + " > " + item.label[primaryLanguage],
     };
   });
