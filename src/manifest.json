@@ -7,6 +7,7 @@
   },
   "permissions": [ "https://*.plus4u.net/uu-bookkitg01-main/*", "https://*.plus4u.net/uu-dockitg01-main/*", "https://*.plus4u.net/uu-bookkit-maing01/*" ],
   "icons": {
+    "34": "icon-34.png",
     "128": "icon-128.png"
   },
   "content_scripts": [{
