@@ -7,7 +7,7 @@
     "build": "node utils/build.js",
     "start": "node utils/webserver.js",
     "prettier": "prettier --write '**/*.{js,jsx,css,html}'",
-    "test": "jest --watch"
+    "test": "jest --watchAll --silent"
   },
   "jest": {
     "setupFiles": [
@@ -20,6 +20,7 @@
     "@types/react": "^16.9.26",
     "elasticlunr": "^0.9.5",
     "fake-indexeddb": "^3.1.2",
+    "fast-array-diff": "^0.2.0",
     "lodash": ">=4.17.19",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

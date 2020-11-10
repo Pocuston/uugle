@@ -4,7 +4,7 @@ import {
   openDb,
   pagesScheme,
   requestToPromise,
-} from "../src/pages/Background/storage";
+} from "../src/common";
 
 //TODO export schemes from storage.js
 
@@ -26,5 +26,21 @@ export async function getBooks() {
 export async function getPages() {
   const transaction = await getTransaction();
   const pagesStore = transaction.objectStore(pagesScheme);
-  return await requestToPromise(pagesStore.getAll());
+  const pages = await requestToPromise(pagesStore.getAll());
+  return pages.sort(comparePages);
+}
+
+export async function forceBookToBeReIndexed(book) {
+  const transaction = await getTransaction();
+  const booksStore = transaction.objectStore(booksScheme);
+  return await requestToPromise(
+    booksStore.put({
+      ...book,
+      lastUpdate: new Date(2020, 9, 1),
+    })
+  );
+}
+
+export function comparePages(pageA, pageB) {
+  return pageA.url.localeCompare(pageB.url);
 }

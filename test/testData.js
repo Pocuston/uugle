@@ -9,6 +9,9 @@ export const uu5BookData = {
   },
   getBookStructure: {
     itemMap: {
+      "36615176": {
+        label: { en: "Validation" },
+      },
       UU5BricksAccordion: {
         label: { en: "UU5.Bricks.Accordion", cs: "UU5.Bricks.Accordion" },
       },
@@ -22,6 +25,27 @@ export const uu5BookData = {
   },
 };
 
+export const uu5BookNewPagesItemMap = {
+  "01713935": {
+    label: { en: "UX Forms - Best Practices" },
+  },
+  useState: {
+    label: { en: "useState", cs: "useState" },
+  },
+  useContext: {
+    label: { en: "useContext", cs: "useContext" },
+  },
+};
+
+export const uu5BookRemovedPagesItemMap = {
+  UU5BricksAccordion: {
+    label: { en: "UU5.Bricks.Accordion", cs: "UU5.Bricks.Accordion" },
+  },
+  UU5BricksModal: {
+    label: { en: "UU5.Bricks.Modal", cs: "UU5.Bricks.Modal" },
+  },
+};
+
 export const uu5Book = {
   name: "uu5 g04 - User Guide",
   url:
@@ -29,6 +53,11 @@ export const uu5Book = {
 };
 
 export const uu5BookPages = [
+  {
+    name: "uu5 g04 - User Guide > Validation",
+    url:
+      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=36615176",
+  },
   {
     name: "uu5 g04 - User Guide > UU5.Bricks.Accordion",
     url:
@@ -43,6 +72,37 @@ export const uu5BookPages = [
     name: "uu5 g04 - User Guide > useEffect",
     url:
       "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=useEffect",
+  },
+];
+
+export const uu5BookNewPages = [
+  {
+    name: "uu5 g04 - User Guide > useState",
+    url:
+      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=useState",
+  },
+  {
+    name: "uu5 g04 - User Guide > useContext",
+    url:
+      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=useContext",
+  },
+  {
+    name: "uu5 g04 - User Guide > UX Forms - Best Practices",
+    url:
+      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=01713935",
+  },
+];
+
+export const uu5BookRemovedPages = [
+  {
+    name: "uu5 g04 - User Guide > UU5.Bricks.Accordion",
+    url:
+      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=UU5BricksAccordion",
+  },
+  {
+    name: "uu5 g04 - User Guide > UU5.Bricks.Modal",
+    url:
+      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=UU5BricksModal",
   },
 ];
 
