@@ -9,9 +9,21 @@ beforeEach(() => {
 
 test("Book is put into book object store", async () => {
   const bookData = uu5BookData;
-  await indexBook(bookData);
-  const books = await getBooks();
 
+  await indexBook(bookData);
+
+  const books = await getBooks();
+  expect(books).toContainEqual(uu5Book);
+  expect(books).toHaveLength(1);
+});
+
+test("Same book is indexed only once", async () => {
+  const bookData = uu5BookData;
+
+  await indexBook(bookData);
+  await indexBook(bookData);
+
+  const books = await getBooks();
   expect(books).toContainEqual(uu5Book);
   expect(books).toHaveLength(1);
 });
