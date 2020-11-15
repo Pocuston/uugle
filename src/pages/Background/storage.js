@@ -238,7 +238,7 @@ async function loadIndexFromDb(transaction) {
  * If database does not exists yet, it is initialized first.
  * @returns {Promise<IDBDatabase>}
  */
-async function openDb() {
+export async function openDb() {
   const request = indexedDB.open(booksDatabase, 1);
 
   request.onupgradeneeded = (event) => {
@@ -297,7 +297,7 @@ function getPageList(bookData, bookUrl) {
  * @param request {IDBRequest}
  * @returns {Promise<any>}
  */
-async function requestToPromise(request) {
+export async function requestToPromise(request) {
   return new Promise((resolve, reject) => {
     request.onsuccess = (event) => resolve(event.target.result);
     request.onerror = (event) => reject(event.target.error);
