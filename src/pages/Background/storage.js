@@ -1,9 +1,10 @@
 const elasticlunr = require("elasticlunr");
 
 const booksDatabase = "booksDb";
-const booksScheme = "books";
-const pagesScheme = "pages";
-const indexScheme = "index";
+export const booksScheme = "books";
+export const pagesScheme = "pages";
+export const indexScheme = "index";
+
 const indexObjectId = 1;
 
 /**
