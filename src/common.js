@@ -9,12 +9,14 @@ export const indexScheme = "index";
  * @returns {Promise<IDBDatabase>}
  */
 export async function openDb() {
-  const request = indexedDB.open(booksDatabase, 2);
+  const request = indexedDB.open(booksDatabase, 3);
 
-  request.onupgradeneeded = (event) => {
-    //TODO clear DB
-
+  request.onupgradeneeded = event => {
     const db = event.target.result;
+
+    db.deleteObjectStore(booksScheme);
+    db.deleteObjectStore(pagesScheme);
+    db.deleteObjectStore(indexScheme);
 
     const bookStore = db.createObjectStore(booksScheme, {
       keyPath: "id",
@@ -41,8 +43,8 @@ export async function openDb() {
   };
 
   return new Promise((resolve, reject) => {
-    request.onsuccess = (event) => resolve(event.target.result);
-    request.onerror = (event) => {
+    request.onsuccess = event => resolve(event.target.result);
+    request.onerror = event => {
       console.log(`uuGle: error opening database ${booksDatabase}`);
       reject();
     };
@@ -56,8 +58,8 @@ export async function openDb() {
  */
 export async function requestToPromise(request) {
   return new Promise((resolve, reject) => {
-    request.onsuccess = (event) => resolve(event.target.result);
-    request.onerror = (event) => reject(event.target.error);
+    request.onsuccess = event => resolve(event.target.result);
+    request.onerror = event => reject(event.target.error);
   });
 }
 
