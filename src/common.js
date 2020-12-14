@@ -14,9 +14,11 @@ export async function openDb() {
   request.onupgradeneeded = event => {
     const db = event.target.result;
 
-    db.deleteObjectStore(booksScheme);
-    db.deleteObjectStore(pagesScheme);
-    db.deleteObjectStore(indexScheme);
+    if (db.objectStoreNames.length > 0) {
+      db.deleteObjectStore(booksScheme);
+      db.deleteObjectStore(pagesScheme);
+      db.deleteObjectStore(indexScheme);
+    }
 
     const bookStore = db.createObjectStore(booksScheme, {
       keyPath: "id",
