@@ -1,6 +1,6 @@
 {
   "name": "uuGle",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "omnibox": { "keyword" : "uu" },
   "background": {
     "page": "background.html"
