@@ -30,13 +30,14 @@ export default async function indexBook(bookData) {
     console.error("uuGle: book indexing error", transaction.error);
   };
 
-  const bookUrl = getBookBaseUrl(bookData.url);
   const booksStore = transaction.objectStore(booksScheme);
   const pagesStore = transaction.objectStore(pagesScheme);
+
+  const awid = getBookAwid(bookData.url);
   const currentTime = new Date();
 
   //If the book has been already indexed and index is up to date, then there is no more to be done
-  let book = await getBookByUrl(booksStore, bookUrl);
+  let book = await getBookByAwid(booksStore, awid);
   if (book && book.lastUpdate > currentTime - bookIndexExpiration) {
     console.log(
       `uuGle: book "${book.name}" has been already indexed and it is up to date. Skipping..`
@@ -47,18 +48,18 @@ export default async function indexBook(bookData) {
   let existingPages;
   //Create new book or update existing book
   if (!book) {
-    book = createNewBookObject(bookData.loadBook, bookUrl, currentTime);
+    book = createNewBookObject(bookData.loadBook, awid, currentTime);
     existingPages = [];
     console.log(`uuGle: new book "${book.name}" is being indexed`);
   } else {
     book.lastUpdate = currentTime;
-    existingPages = await getBookPages(book.id, pagesStore);
+    existingPages = await getBookPages(awid, pagesStore);
     console.log(`uuGle: existing book "${book.name}" will be re-indexed`);
   }
   let bookId = await requestToPromise(booksStore.put(book));
 
   //create list of pages from retrieved book data
-  const bookDataPages = getPageList(bookData, bookUrl, bookId);
+  const bookDataPages = getPageList(bookData, bookId, awid);
 
   const changePatch = diff.getPatch(existingPages, bookDataPages, comparePages);
   await applyChangePatch(changePatch, pagesStore);
@@ -74,38 +75,37 @@ export default async function indexBook(bookData) {
 }
 
 /**
- * Extracts bookkit base URL from any page URL.
+ * Extracts bookkit base URL and awid from any page URL.
  * @param {string} pageUrl
  * @returns {string}
  */
-function getBookBaseUrl(pageUrl) {
-  const bookBaseUrlRexExp = /https:\/\/[a-zA-Z0-9]+\.plus4u.net\/(uu-dockitg01-main|uu-bookkit-maing01|uu-bookkitg01-main)\/[a-z0-9-]+/;
+function getBookAwid(pageUrl) {
+  const bookBaseUrlRexExp = /https:\/\/[a-zA-Z0-9]+\.plus4u.net\/(uu-dockitg01-main|uu-bookkit-maing01|uu-bookkitg01-main)\/([a-z0-9]+-)?([a-z0-9]+)/;
   const matches = pageUrl.match(bookBaseUrlRexExp);
   if (!matches || matches.length === 0) {
     throw new Error("uuGle: invalid bookkit page url: " + pageUrl);
   }
 
-  return matches[0];
+  return matches[3];
 }
 
 /**
  * Loads single book bu URL
  * @param bookStore
- * @param url
+ * @param {string} awid
  * @returns {Promise<Book>}
  */
-function getBookByUrl(bookStore, url) {
-  const index = bookStore.index("url");
-  return requestToPromise(index.get(url));
+function getBookByAwid(bookStore, awid) {
+  return requestToPromise(bookStore.get(awid));
 }
 
-async function getBookPages(bookId, pagesStore) {
-  const index = pagesStore.index("bookId");
-  return await requestToPromise(index.getAll(bookId));
+async function getBookPages(awid, pagesStore) {
+  const index = pagesStore.index("awid");
+  return await requestToPromise(index.getAll(awid));
 }
 
 function comparePages(pageA, pageB) {
-  return pageA.url === pageB.url && pageA.name === pageB.name;
+  return pageA.code === pageB.code && pageA.name === pageB.name;
 }
 
 async function applyChangePatch(patch, pagesStore) {
@@ -144,25 +144,26 @@ async function applyChangePatch(patch, pagesStore) {
   console.log(`uuGle: added ${pagesToAdd.length} new pages`);
 }
 
-function createNewBookObject(bookData, bookUrl, lastUpdate) {
+function createNewBookObject(bookData, awid, lastUpdate) {
   const { primaryLanguage, name } = bookData;
   return {
-    url: bookUrl,
+    awid,
     name: name[primaryLanguage],
-    lastUpdate: lastUpdate,
+    lastUpdate,
   };
 }
 
-function getPageList(bookData, bookUrl, bookId) {
+function getPageList(bookData, bookId, awid) {
   const { name, primaryLanguage } = bookData.loadBook;
   const { itemMap } = bookData.getBookStructure;
 
   //TODO doplnit cestu
   return Object.entries(itemMap).map(itemPair => {
-    const [key, item] = itemPair;
+    const [code, item] = itemPair;
     return {
       bookId,
-      url: `${bookUrl}/book/page?code=${key}`,
+      awid,
+      code,
       name: name[primaryLanguage] + " > " + item.label[primaryLanguage],
     };
   });

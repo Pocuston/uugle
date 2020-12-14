@@ -48,61 +48,60 @@ export const uu5BookRemovedPagesItemMap = {
 
 export const uu5Book = {
   name: "uu5 g04 - User Guide",
-  url:
-    "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178",
+  awid: "ed11ec379073476db0aa295ad6c00178",
 };
 
 export const uu5BookPages = [
   {
     name: "uu5 g04 - User Guide > Validation",
-    url:
-      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=36615176",
+    awid: "ed11ec379073476db0aa295ad6c00178",
+    code: "36615176",
   },
   {
     name: "uu5 g04 - User Guide > UU5.Bricks.Accordion",
-    url:
-      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=UU5BricksAccordion",
+    awid: "ed11ec379073476db0aa295ad6c00178",
+    code: "UU5BricksAccordion",
   },
   {
     name: "uu5 g04 - User Guide > UU5.Bricks.Modal",
-    url:
-      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=UU5BricksModal",
+    awid: "ed11ec379073476db0aa295ad6c00178",
+    code: "UU5BricksModal",
   },
   {
     name: "uu5 g04 - User Guide > useEffect",
-    url:
-      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=useEffect",
+    awid: "ed11ec379073476db0aa295ad6c00178",
+    code: "useEffect",
   },
 ];
 
 export const uu5BookNewPages = [
   {
     name: "uu5 g04 - User Guide > useState",
-    url:
-      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=useState",
+    awid: "ed11ec379073476db0aa295ad6c00178",
+    code: "useState",
   },
   {
     name: "uu5 g04 - User Guide > useContext",
-    url:
-      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=useContext",
+    awid: "ed11ec379073476db0aa295ad6c00178",
+    code: "useContext",
   },
   {
     name: "uu5 g04 - User Guide > UX Forms - Best Practices",
-    url:
-      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=01713935",
+    awid: "ed11ec379073476db0aa295ad6c00178",
+    code: "01713935",
   },
 ];
 
 export const uu5BookRemovedPages = [
   {
     name: "uu5 g04 - User Guide > UU5.Bricks.Accordion",
-    url:
-      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=UU5BricksAccordion",
+    awid: "ed11ec379073476db0aa295ad6c00178",
+    code: "UU5BricksAccordion",
   },
   {
     name: "uu5 g04 - User Guide > UU5.Bricks.Modal",
-    url:
-      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=UU5BricksModal",
+    awid: "ed11ec379073476db0aa295ad6c00178",
+    code: "UU5BricksModal",
   },
 ];
 
@@ -132,24 +131,23 @@ export const uuAppFrameworkBookData = {
 
 export const uuAppFrameworkBook = {
   name: "uuApp Framework",
-  url:
-    "https://uuapp.plus4u.net/uu-bookkit-maing01/25d3b166760a44b7be70e5c2eb2abaaa",
+  awid: "25d3b166760a44b7be70e5c2eb2abaaa",
 };
 
 export const uuAppFrameworkBookPages = [
   {
     name: "uuApp Framework > Validation",
-    url:
-      "https://uuapp.plus4u.net/uu-bookkit-maing01/25d3b166760a44b7be70e5c2eb2abaaa/book/page?code=validation_00",
+    awid: "25d3b166760a44b7be70e5c2eb2abaaa",
+    code: "validation_00",
   },
   {
     name: "uuApp Framework > uuAppObjectStore",
-    url:
-      "https://uuapp.plus4u.net/uu-bookkit-maing01/25d3b166760a44b7be70e5c2eb2abaaa/book/page?code=uuAppObjectStore_00",
+    awid: "25d3b166760a44b7be70e5c2eb2abaaa",
+    code: "uuAppObjectStore_00",
   },
   {
     name: "uuApp Framework > sys/getHealth (uuCmd)",
-    url:
-      "https://uuapp.plus4u.net/uu-bookkit-maing01/25d3b166760a44b7be70e5c2eb2abaaa/book/page?code=sysGetHealth_00",
+    awid: "25d3b166760a44b7be70e5c2eb2abaaa",
+    code: "sysGetHealth_00",
   },
 ];

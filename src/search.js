@@ -2,22 +2,32 @@ import { searchIndex } from "./searchIndex";
 import { openDb, pagesScheme, requestToPromise } from "./common";
 
 /**
- * Maximum number of items to suggest in omnibar
+ * Maximum number of items to suggest in omnibox
  * @type {number}
  */
 const maxSuggestions = 15;
 
 /**
+ * Base URL of bookkit page
+ * @type {string}
+ */
+const pageUrlBase = "https://uuapp.plus4u.net/uu-bookkit-maing01";
+
+/**
  * Creates omnibox suggestion from page info
- * @param url
- * @param name
+ * @param {{name: string, awid: string, code: string}} page
  * @returns {{description: string, content: *}}
  */
-export function getSuggestion({ url, name }) {
+export function getSuggestion(page) {
+  const url = getPageUrl(page);
   return {
     content: url,
-    description: `${escapeHtml(name)} - <url>${url}</url>`,
+    description: `${escapeHtml(page.name)} - <url>${url}</url>`,
   };
+}
+
+function getPageUrl(page) {
+  return `${pageUrlBase}/${page.awid}/book/page?code=${page.code}`;
 }
 
 /**

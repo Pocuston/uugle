@@ -144,8 +144,8 @@ test("When the page name is changed, it should be changed in index after the rei
   const updatedPages = [...uu5BookPages];
   updatedPages[1] = {
     name: "uu5 g04 - User Guide > UU5.Bricks.Accordion - updated!",
-    url:
-      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=UU5BricksAccordion",
+    awid: "ed11ec379073476db0aa295ad6c00178",
+    code: "UU5BricksAccordion",
   };
 
   const pagesAfterReindex = await getPages();
