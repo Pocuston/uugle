@@ -6,8 +6,6 @@ import {
   requestToPromise,
 } from "../src/common";
 
-//TODO export schemes from storage.js
-
 async function getTransaction() {
   const db = await openDb();
   const transaction = db.transaction(
@@ -41,6 +39,14 @@ export async function forceBookToBeReIndexed(book) {
   );
 }
 
+/**
+ * Compares book pages by book awid and page code to be able to compare arrays of pages in tests
+ * @param pageA
+ * @param pageB
+ * @returns {number}
+ */
 export function comparePages(pageA, pageB) {
-  return pageA.url.localeCompare(pageB.url);
+  return `${pageA.awid}/${pageA.code}`.localeCompare(
+    `${pageB.awid}/${pageB.code}`
+  );
 }

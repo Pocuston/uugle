@@ -9,7 +9,7 @@ export const indexScheme = "index";
  * @returns {Promise<IDBDatabase>}
  */
 export async function openDb() {
-  const request = indexedDB.open(booksDatabase, 3);
+  const request = indexedDB.open(booksDatabase, 4);
 
   request.onupgradeneeded = event => {
     const db = event.target.result;
@@ -21,19 +21,16 @@ export async function openDb() {
     }
 
     const bookStore = db.createObjectStore(booksScheme, {
-      keyPath: "id",
-      autoIncrement: true,
-    });
-    bookStore.createIndex("url", "url", {
-      unique: true,
+      keyPath: "awid",
     });
 
     const pageStore = db.createObjectStore(pagesScheme, {
       keyPath: "id",
       autoIncrement: true,
     });
-    pageStore.createIndex("bookId", "bookId");
-    pageStore.createIndex("url", "url", {
+    pageStore.createIndex("awid", "awid", { unique: false });
+    pageStore.createIndex("awid-code", ["awid", "code"], {
+      multiEntry: false,
       unique: true,
     });
 
