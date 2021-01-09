@@ -109,22 +109,6 @@ function comparePages(pageA, pageB) {
 }
 
 async function applyChangePatch(patch, pagesStore) {
-  let pagesToAdd = [];
-  patch
-    .filter(action => action.type === "add")
-    .forEach(action => (pagesToAdd = [...pagesToAdd, ...action.items]));
-
-  //every new page is put to object store and added to index
-  await Promise.all(
-    pagesToAdd.map(page => {
-      return requestToPromise(pagesStore.add(page)).then(pageId => {
-        const indexDoc = { id: pageId, name: page.name };
-        searchIndex.addDoc(indexDoc);
-      });
-    })
-  );
-  console.log(`uuGle: added ${pagesToAdd.length} new pages`);
-
   let pagesToRemove = [];
   patch
     .filter(action => action.type === "remove")
@@ -142,6 +126,22 @@ async function applyChangePatch(patch, pagesStore) {
     })
   );
   console.log(`uuGle: removed ${pagesToRemove.length} existing pages`);
+
+  let pagesToAdd = [];
+  patch
+    .filter(action => action.type === "add")
+    .forEach(action => (pagesToAdd = [...pagesToAdd, ...action.items]));
+
+  //every new page is put to object store and added to index
+  await Promise.all(
+    pagesToAdd.map(page => {
+      return requestToPromise(pagesStore.add(page)).then(pageId => {
+        const indexDoc = { id: pageId, name: page.name };
+        searchIndex.addDoc(indexDoc);
+      });
+    })
+  );
+  console.log(`uuGle: added ${pagesToAdd.length} new pages`);
 }
 
 function createNewBookObject(bookData, bookUrl, lastUpdate) {

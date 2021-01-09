@@ -122,3 +122,35 @@ test("Reindex removes deleted pages", async () => {
       .map(page => expect.objectContaining(page))
   );
 });
+
+test("When the page name is changed, it should be changed in index after the reindexing is done", async () => {
+  await indexBook(uu5BookData);
+
+  const book = (await getBooks())[0];
+  await forceBookToBeReIndexed(book);
+
+  await indexBook({
+    ...uu5BookData,
+    getBookStructure: {
+      itemMap: {
+        ...uu5BookData.getBookStructure.itemMap,
+        UU5BricksAccordion: {
+          label: { en: "UU5.Bricks.Accordion - updated!" },
+        },
+      },
+    },
+  });
+
+  const updatedPages = [...uu5BookPages];
+  updatedPages[1] = {
+    name: "uu5 g04 - User Guide > UU5.Bricks.Accordion - updated!",
+    url:
+      "https://uuos9.plus4u.net/uu-bookkitg01-main/78462435-ed11ec379073476db0aa295ad6c00178/book/page?code=UU5BricksAccordion",
+  };
+
+  const pagesAfterReindex = await getPages();
+
+  expect(pagesAfterReindex).toEqual(
+    updatedPages.sort(comparePages).map(page => expect.objectContaining(page))
+  );
+});
