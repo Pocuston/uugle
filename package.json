@@ -1,7 +1,7 @@
 {
   "name": "uuGle",
-  "version": "0.0.1",
-  "description": "A chrome extension for bookkit fulltext search",
+  "version": "0.0.8",
+  "description": "uuGle Chrome extension provides fast and user-friendly searching across Unicorn bookkit and dockit books in browser search bar.",
   "license": "MIT",
   "scripts": {
     "build": "node utils/build.js",
@@ -19,7 +19,6 @@
     "@types/chrome": "0.0.104",
     "@types/react": "^16.9.26",
     "elasticlunr": "^0.9.5",
-    "fake-indexeddb": "^3.1.2",
     "fast-array-diff": "^0.2.0",
     "lodash": ">=4.17.19",
     "react": "^16.13.1",
@@ -46,6 +45,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^3.0.0",
+    "fake-indexeddb": "^3.1.2",
     "file-loader": "^6.0.0",
     "fs-extra": "^9.0.0",
     "html-loader": "0.5.5",
