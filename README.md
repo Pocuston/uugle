@@ -7,9 +7,10 @@
 ## Usage 
 
 1. **uuGle** automatically indexes every Unicorn bookkit book you open. Just open a single page of any book, and a list of all the pages
-    in that book will be indexed and available for search anytime in the future.
-    
-    *Note*: **uuGle** *indexes only page titles, not whole page content*.
+    in that book will be indexed and available for quick search anytime in the future.
+   - **uuGle** indexes only **page title and book name** for searching, not whole page content (**uuGle** does not provide fulltext search).
+   - Book must be opened by first for the pages to be indexed and available for searching.
+   - It does not matter which specific page of book you open (home page is quite enough), all pages of the book you are permitted to are indexed. 
      
 1. Type "*uu*" in search bar on any browser tab to switch to **uuGle** search in indexed books. Once in **uuGle** search mode, type any word from page or book title. Most relevant searches are being instantly suggested as you type.
     - You don't need to type whole word, search results are automatically expanded for you (e.g. type just "trans" and search results containing word "transaction" will be suggested).
@@ -21,7 +22,7 @@
 Book pages index is permanently stored in the browser's [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) database. **uuGle** uses
 [Elasticlunr.js](http://elasticlunr.com/) for fast and user friendly searching.
 
-### Install extension
+## Install extension
 Plugin is not available in official Chrome store yet, so it must be installed from local directory.
 1. Download extension package from [latest release](https://github.com/Pocuston/uugle/releases/) and extract it to empty directory. 
 1. Go to [chrome://extensions/](chrome://extensions/)
@@ -42,7 +43,10 @@ Plugin is not available in official Chrome store yet, so it must be installed fr
 1. Add breadcrumb path from menu to page name.
 1. ...
 
-# Development
+# Development guide
+
+<span style="color:red">Use this guide for extension development only, for common extension usage see previous text.</span>  
+
 # Chrome Extension Boilerplate with React 16.13 and Webpack 4
 
 [![npm](https://img.shields.io/npm/v/chrome-extension-boilerplate-react)](https://www.npmjs.com/package/chrome-extension-boilerplate-react)
