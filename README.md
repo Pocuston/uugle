@@ -40,7 +40,6 @@ Plugin is not available in official Chrome store yet, so it must be installed fr
 1. Better icon should be provided to distinguish uuGle and common suggestions. 
 
 ## Road map
-1. Book already indexed will be automatically re-indexed to reflect book content changes. Based on some timestamp from book data or simple time.
 1. GUI to control book indexing - delete index, reindex single book etc.
 1. Add breadcrumb path from menu to page name.
 1. ...
