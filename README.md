@@ -22,6 +22,8 @@
 Book pages index is permanently stored in the browser's [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) database. **uuGle** uses
 [Elasticlunr.js](http://elasticlunr.com/) for fast and user friendly searching.
 
+Every indexed book is being re-indexed after some time once you open it to keep index of pages up-to-date.
+
 ## Install extension
 Plugin is not available in official Chrome store yet, so it must be installed from local directory.
 1. Download extension package from [latest release](https://github.com/Pocuston/uugle/releases/) and extract it to empty directory. 
