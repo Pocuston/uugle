@@ -4,6 +4,7 @@ var webpack = require("webpack"),
   env = require("./utils/env"),
   { CleanWebpackPlugin } = require("clean-webpack-plugin"),
   CopyWebpackPlugin = require("copy-webpack-plugin"),
+  HtmlWebpackPlugin = require("html-webpack-plugin"),
   WriteFilePlugin = require("write-file-webpack-plugin");
 
 // load the secrets
@@ -36,6 +37,7 @@ var options = {
     background: path.join(__dirname, "src", "background.js"),
     contentScript: path.join(__dirname, "src", "pages", "Content", "index.js"),
     inject: path.join(__dirname, "src", "pages", "Content", "inject.js"),
+    popup: path.join(__dirname, "src", "pages", "Popup", "index.jsx"),
   },
   //FIXME
   chromeExtensionBoilerplate: {
@@ -134,6 +136,11 @@ var options = {
         copyUnmodified: true,
       }
     ),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "src", "pages", "Popup", "index.html"),
+      filename: "popup.html",
+      chunks: ["popup"],
+    }),
     new WriteFilePlugin(),
   ],
 };
