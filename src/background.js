@@ -1,8 +1,8 @@
-import "../../assets/img/icon-34.png";
-import "../../assets/img/icon-128.png";
-import indexBook from "../../indexBook";
-import { initialize } from "../../searchIndex";
-import search from "../../search";
+import "./assets/img/icon-34.png";
+import "./assets/img/icon-128.png";
+import indexBook from "./indexBook";
+import { initialize } from "./searchIndex";
+import search from "./search";
 
 (async function () {
   //Initialize page index

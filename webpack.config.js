@@ -4,7 +4,6 @@ var webpack = require("webpack"),
   env = require("./utils/env"),
   { CleanWebpackPlugin } = require("clean-webpack-plugin"),
   CopyWebpackPlugin = require("copy-webpack-plugin"),
-  HtmlWebpackPlugin = require("html-webpack-plugin"),
   WriteFilePlugin = require("write-file-webpack-plugin");
 
 // load the secrets
@@ -34,7 +33,7 @@ if (fileSystem.existsSync(secretsPath)) {
 var options = {
   mode: process.env.NODE_ENV || "development",
   entry: {
-    background: path.join(__dirname, "src", "pages", "Background", "index.js"),
+    background: path.join(__dirname, "src", "background.js"),
     contentScript: path.join(__dirname, "src", "pages", "Content", "index.js"),
     inject: path.join(__dirname, "src", "pages", "Content", "inject.js"),
   },
@@ -87,7 +86,7 @@ var options = {
   resolve: {
     alias: alias,
     extensions: fileExtensions
-      .map((extension) => "." + extension)
+      .map(extension => "." + extension)
       .concat([".jsx", ".js", ".css"]),
   },
   plugins: [
@@ -135,17 +134,6 @@ var options = {
         copyUnmodified: true,
       }
     ),
-    new HtmlWebpackPlugin({
-      template: path.join(
-        __dirname,
-        "src",
-        "pages",
-        "Background",
-        "index.html"
-      ),
-      filename: "background.html",
-      chunks: ["background"],
-    }),
     new WriteFilePlugin(),
   ],
 };
