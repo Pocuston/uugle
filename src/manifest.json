@@ -18,6 +18,16 @@
     "default_title": "Click Me",
     "default_popup": "popup.html"
   },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "linux": "Ctrl+U",
+        "windows": "Ctrl+Shift+U",
+        "mac": "Command+U"
+      }
+    }
+  },
   "content_scripts": [{
     "matches": ["https://*.plus4u.net/uu-bookkitg01-main/*", "https://*.plus4u.net/uu-dockitg01-main/*", "https://*.plus4u.net/uu-bookkit-maing01/*"],
     "js": ["contentScript.bundle.js"],
