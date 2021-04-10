@@ -5,6 +5,7 @@ import {
   pagesScheme,
   requestToPromise,
 } from "../src/common";
+import { getPageUrl, getSuggestion } from "../src/search";
 
 async function getTransaction() {
   const db = await openDb();
@@ -49,4 +50,16 @@ export function comparePages(pageA, pageB) {
   return `${pageA.awid}/${pageA.code}`.localeCompare(
     `${pageB.awid}/${pageB.code}`
   );
+}
+
+/**
+ * Adds field with complete page URL and then returns suggestion
+ * @param page
+ * @returns {{description: string, content: *}}
+ */
+export function getTestSuggestion(page) {
+  return getSuggestion({
+    ...page,
+    url: getPageUrl(page),
+  });
 }

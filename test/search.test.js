@@ -12,8 +12,12 @@ import {
 import indexBook from "../src/indexBook";
 import { initialize } from "../src/searchIndex";
 import { beforeEach, test } from "@jest/globals";
-import search, { getSuggestion } from "../src/search";
-import { forceBookToBeReIndexed, getBooks, getPages } from "./testUtils";
+import { searchAndSuggest } from "../src/search";
+import {
+  forceBookToBeReIndexed,
+  getBooks,
+  getTestSuggestion,
+} from "./testUtils";
 
 beforeEach(async () => {
   indexedDB = new FDBFactory();
@@ -25,13 +29,13 @@ test("Pages from multiple books can be found", async () => {
   await indexBook(uuAppFrameworkBookData);
 
   const suggest = jest.fn();
-  await search("validation", suggest);
+  await searchAndSuggest("validation", suggest);
 
   expect(suggest).toHaveBeenCalledWith(
     [
       uuAppFrameworkBookPages.find(page => page.name.includes("Validation")),
       uu5BookPages.find(page => page.name.includes("Validation")),
-    ].map(page => getSuggestion(page))
+    ].map(page => getTestSuggestion(page))
   );
 });
 
@@ -52,11 +56,11 @@ test("After reindex new pages can be found", async () => {
   });
 
   const suggest = jest.fn();
-  await search("usecontext", suggest);
+  await searchAndSuggest("usecontext", suggest);
 
   expect(suggest).toHaveBeenCalledWith(
     [uu5BookNewPages.find(page => page.name.includes("useContext"))].map(page =>
-      getSuggestion(page)
+      getTestSuggestion(page)
     )
   );
 });
@@ -75,7 +79,7 @@ test("After reindex removed pages can be no longer found", async () => {
   });
 
   const suggest = jest.fn();
-  await search("validation", suggest);
+  await searchAndSuggest("validation", suggest);
 
   expect(suggest).toHaveBeenCalledWith([]);
 });

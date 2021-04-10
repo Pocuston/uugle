@@ -1,4 +1,6 @@
 body {
-  width: 300px;
-  padding: 10px;
+  width: 600px;
+  min-height: 200px;
+  padding: 2px;
+  overflow: auto;
 }

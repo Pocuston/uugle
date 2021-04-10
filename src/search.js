@@ -5,7 +5,7 @@ import { openDb, pagesScheme, requestToPromise } from "./common";
  * Maximum number of items to suggest in omnibox
  * @type {number}
  */
-const maxSuggestions = 15;
+const maxSuggestions = 30;
 
 /**
  * Base URL of bookkit page
@@ -19,23 +19,26 @@ const pageUrlBase = "https://uuapp.plus4u.net/uu-bookkit-maing01";
  * @returns {{description: string, content: *}}
  */
 export function getSuggestion(page) {
-  const url = getPageUrl(page);
   return {
-    content: url,
-    description: `${escapeHtml(page.name)} - <url>${url}</url>`,
+    content: page.url,
+    description: `${escapeHtml(page.name)} - <url>${page.url}</url>`,
   };
 }
 
-function getPageUrl(page) {
+/**
+ * Returns page URL
+ * @param page
+ * @returns {string}
+ */
+export function getPageUrl(page) {
   return `${pageUrlBase}/${page.awid}/book/page?code=${page.code}`;
 }
 
 /**
  * Fulltext search in index
  * @param {string} query
- * @param {(suggestResults: chrome.omnibox.SuggestResult[]) => void} suggest
  */
-export default async function search(query, suggest) {
+export async function search(query) {
   /**
    * Creates chrome omnibox suggestion
    * @param page
@@ -48,21 +51,18 @@ export default async function search(query, suggest) {
   }
 
   if (!query) {
-    suggest([]);
-    return;
+    return [];
   }
 
   query = query.trim();
   if (query === "") {
-    suggest([]);
-    return;
+    return [];
   }
 
   //First, we query index for page ids
   let indexResults = searchIndex.search(query, { expand: true });
   if (indexResults.length === 0) {
-    suggest([]);
-    return;
+    return [];
   }
 
   if (indexResults.length > maxSuggestions) {
@@ -79,12 +79,11 @@ export default async function search(query, suggest) {
   const pagesStore = transaction.objectStore(pagesScheme);
 
   //Since get requests run in parallel we must wait for all of them
-  const suggestions = await Promise.all(
+  const results = await Promise.all(
     indexResults.map(indexDoc => {
       return requestToPromise(pagesStore.get(parseInt(indexDoc.ref)))
-        .then(result => {
-          const page = result;
-          return getSuggestion(page);
+        .then(page => {
+          return { ...page, url: getPageUrl(page) };
         })
         .catch(error => {
           console.error("uuGle: error loading page:", indexDoc.ref, error);
@@ -92,7 +91,20 @@ export default async function search(query, suggest) {
     })
   );
 
-  console.log("uuGle: suggestions for '" + query + "' :", suggestions);
+  console.log("uuGle: suggestions for '" + query + "' :", results);
+  return results;
+}
+
+/**
+ * Fulltext search in index
+ * @param {string} query
+ * @param {(suggestResults: chrome.omnibox.SuggestResult[]) => void} suggest
+ */
+export async function searchAndSuggest(query, suggest) {
+  const searchResults = await search(query);
+
+  const suggestions = searchResults.map(getSuggestion);
+
   //We call suggest method from chrome.omnibox to suggest results
   suggest(suggestions);
 }

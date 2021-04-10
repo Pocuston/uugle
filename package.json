@@ -17,6 +17,7 @@
   "dependencies": {
     "@hot-loader/react-dom": "^16.13.0",
     "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "@types/chrome": "0.0.104",
     "@types/react": "^16.9.26",
     "elasticlunr": "^0.9.5",
