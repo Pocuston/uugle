@@ -9,7 +9,6 @@ console.log("uuGle: inject script is running");
   };
 
   XMLHttpRequest.prototype.open = function (method, url, async, user, pass) {
-    console.log("uuGle", url);
     if (url.includes("loadBook")) {
       this.addEventListener("load", function () {
         console.log(`uuGle: intercepted loadBook response`);
