@@ -57,13 +57,6 @@ function Popup() {
     }
   }, [selectedIndex]);
 
-  useEffect(() => {
-    chrome.runtime.sendMessage(
-      { messageType: "searchRequest", data: { query: "use" } },
-      handleSearchResponse
-    );
-  }, []);
-
   function handleSearchResponse(response) {
     setSearchResults(response.results);
     setSelectedIndex(0);
