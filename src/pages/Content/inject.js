@@ -7,7 +7,9 @@ console.log("uuGle: inject script is running");
     loadBook: null,
     getBookStructure: null,
   };
+
   XMLHttpRequest.prototype.open = function (method, url, async, user, pass) {
+    console.log("uuGle", url);
     if (url.includes("loadBook")) {
       this.addEventListener("load", function () {
         console.log(`uuGle: intercepted loadBook response`);
@@ -29,4 +31,26 @@ console.log("uuGle: inject script is running");
     }
     origOpen.apply(this, arguments);
   };
+
+  //Later, uu5 requests are made using fetch instead of xhr, so we must intercept also fetch responses
+  const fetch = window.fetch;
+  window.fetch = (...args) =>
+    (async args => {
+      const response = await fetch(...args);
+      if (response.url.includes("loadBook")) {
+        console.log(`uuGle: intercepted loadBook response`);
+        bookData.loadBook = await response.clone().json();
+      } else if (response.url.includes("getBookStructure")) {
+        console.log(`uuGle: intercepted getBookStructure response`);
+        bookData.getBookStructure = await response.clone().json();
+
+        //Once we have bot response data we invoke event, which is consumed by uuGle plugin to index the book
+        document.dispatchEvent(
+          new CustomEvent("uuGle:bookRetrieved", {
+            detail: JSON.stringify(bookData),
+          })
+        );
+      }
+      return response;
+    })(args);
 })();
