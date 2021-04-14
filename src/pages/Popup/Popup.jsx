@@ -1,28 +1,9 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import React, { useState } from "react";
 import Search from "@material-ui/icons/Search";
-import BookmarkTwoToneIcon from "@material-ui/icons/BookmarkTwoTone";
-import {
-  List,
-  Link,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  InputAdornment,
-  TextField,
-} from "@material-ui/core";
+import { List, InputAdornment, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "./Popup.css";
-
-function isElementInViewport(element) {
-  const rect = element.getBoundingClientRect();
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <=
-      (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  );
-}
+import PageListItem from "./PageListItem";
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -46,16 +27,6 @@ function Popup() {
   const classes = useStyles();
   const [searchResults, setSearchResults] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const selectedLisItemRef = useRef();
-
-  useLayoutEffect(() => {
-    if (
-      selectedLisItemRef.current &&
-      !isElementInViewport(selectedLisItemRef.current)
-    ) {
-      selectedLisItemRef.current.scrollIntoView(false);
-    }
-  }, [selectedIndex]);
 
   function handleSearchResponse(response) {
     setSearchResults(response.results);
@@ -70,10 +41,8 @@ function Popup() {
     );
   }
 
-  function handlePageClick(event, page) {
-    //we do not use standard href with page url to be able to open links in background tabs and to search popup remain open
-    openPage(page, event.ctrlKey);
-    event.preventDefault();
+  function handlePageClick(page, newTab) {
+    openPage(page, newTab);
   }
 
   function handleKeyDown(event) {
@@ -126,36 +95,11 @@ function Popup() {
       />
       <List component="nav" dense={true} classes={{ root: classes.list }}>
         {searchResults.map((page, index) => (
-          <ListItem
-            onClick={event => {
-              handlePageClick(event, page);
-            }}
-            key={`${page.awid}/${page.code}`}
-            button
-            disableGutters
+          <PageListItem
+            page={page}
             selected={index === selectedIndex}
-            ref={index === selectedIndex ? selectedLisItemRef : null}
-          >
-            <ListItemIcon classes={{ root: classes.listIconItem }}>
-              <BookmarkTwoToneIcon className={classes.pageIcon} />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <Link
-                  title={page.url}
-                  href={page.url}
-                  onClick={event => {
-                    handlePageClick(event, page);
-                  }}
-                >
-                  {page.name}
-                </Link>
-              }
-              classes={{
-                secondary: classes.secondary,
-              }}
-            />
-          </ListItem>
+            onClick={handlePageClick}
+          />
         ))}
       </List>
     </div>
