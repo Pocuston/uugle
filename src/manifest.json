@@ -1,6 +1,6 @@
 {
   "name": "uuGle",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "uuGle Chrome extension provides fast and user-friendly searching across Unicorn bookkit and dockit books in browser search bar.",
   "omnibox": { "keyword" : "uu" },
   "background": {
