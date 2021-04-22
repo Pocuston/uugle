@@ -32,17 +32,12 @@ Plugin is not available in official Chrome store yet, so it must be installed fr
 1. Use Load *Unpacked button* and point to directory with extracted package from pont 1.
 
 ## Constraints   
-1. Only page title is being indexed. Searching page content is not available.
+1. Only page title is being indexed. Fulltext content searching is not available.
 1. Only english language fulltext search is supported.
-1. Every book is indexed only once at the moment. Re-indexation need to be implemented to reflect book content changes.  
-1. Performance test with large number of books need to be done.
-1. There is no GUI to manage indexing and indexed content so far.
-1. Better icon should be provided to distinguish uuGle and common suggestions. 
 
 ## Road map
 1. GUI to control book indexing - delete index, reindex single book etc.
-1. Add breadcrumb path from menu to page name.
-1. ...
+1. automatic indexing of unvisited books from some catalog like https://docs.unicorn.com/books
 
 # Development guide
 
