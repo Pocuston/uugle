@@ -1,6 +1,6 @@
 # uuGle
 
-**uuGle** Chrome extension provides fast and user-friendly searching across Unicorn bookkit and dockit books through browser search bar.
+**uuGle** Chrome extension provides fast and user-friendly searching across Unicorn bookkit and dockit books.
 
 ![demo](https://i.imgur.com/S1FX6zm.gif)
 
@@ -9,7 +9,6 @@
 1. **uuGle** automatically indexes every Unicorn bookkit book you open. Just open a single page of any book, and a list of all the pages
     in that book will be indexed and available for quick search anytime in the future.
    - **uuGle** indexes only **page title and book name** for searching, not whole page content (**uuGle** does not provide fulltext search).
-   - Book must be opened by first for the pages to be indexed and available for searching.
    - It does not matter which specific page of book you open (home page is quite enough), all pages of the book you are permitted to are indexed. 
      
 1. Type "*uu*" in search bar on any browser tab to switch to **uuGle** search in indexed books. Once in **uuGle** search mode, type any word from page or book title. Most relevant searches are being instantly suggested as you type.
@@ -41,7 +40,7 @@ Plugin is not available in official Chrome store yet, so it must be installed fr
 
 # Development guide
 
-<span style="color:red">Use this guide for extension development only, for common extension usage see previous text.</span>  
+<span style="color:red">Use following guide for extension **development** only, for common extension usage see previous lines.</span>  
 
 # Chrome Extension Boilerplate with React 16.13 and Webpack 4
 
