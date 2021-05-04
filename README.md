@@ -1,6 +1,6 @@
 # uuGle
 
-**uuGle** Chrome extension provides fast and user-friendly searching across Unicorn bookkit and dockit books.
+**uuGle** Chrome extension for fast and user friendly search in Unicorn bookkit and dockit books.
 
 ![demo](https://i.imgur.com/S1FX6zm.gif)
 
