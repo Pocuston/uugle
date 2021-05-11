@@ -4,26 +4,29 @@ import indexBook from "./indexBook";
 import { initialize } from "./searchIndex";
 import { search, searchAndSuggest } from "./search";
 
-(async function () {
+(async function() {
   //Initialize page index
   await initialize();
 
-  // This event is fired each time the user updates the text in the omnibox,
-  // as long as the extension's keyword mode is still active.
-  chrome.omnibox.onInputChanged.addListener(function (text, suggest) {
-    searchAndSuggest(text, suggest);
-  });
-
-  // This event is fired when the user accepts the input in the omnibox.
-  chrome.omnibox.onInputEntered.addListener(function (text) {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const currentTab = tabs[0];
-      chrome.tabs.update(currentTab.id, { url: text });
+  // Not all browsers have omnibox (for example Safari)
+  if (chrome.omnibox) {
+    // This event is fired each time the user updates the text in the omnibox,
+    // as long as the extension's keyword mode is still active.
+    chrome.omnibox.onInputChanged.addListener(function(text, suggest) {
+      searchAndSuggest(text, suggest);
     });
-  });
+
+    // This event is fired when the user accepts the input in the omnibox.
+    chrome.omnibox.onInputEntered.addListener(function(text) {
+      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        const currentTab = tabs[0];
+        chrome.tabs.update(currentTab.id, { url: text });
+      });
+    });
+  }
 
   // Listening for events from inject.js
-  chrome.runtime.onMessage.addListener(function (
+  chrome.runtime.onMessage.addListener(function(
     request,
     sender,
     sendResponse
