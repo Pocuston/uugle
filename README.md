@@ -15,13 +15,22 @@
     - You don't need to type whole word, search results are automatically expanded for you (e.g. type just "trans" and search results containing word "transaction" will be suggested).
     - Suggestions are sorted from the most relevant at the top.
     - For each suggestion you can see target book page URL.
-    
 1. Select suggestion and the corresponding book page will open in currently active browser tab.
+   
+### Alternative way of searching using uuGle UI
+You can start searching using **uuGle UI** by clicking on the extension icon or using **keyboard shortcut** (*Ctrl+Shift+U* on Windows, *Ctrl+U* on Linux, *Command+U* on Mac).
+This way, you take advantage of the standard Chrome search bar, like:
+   - You can open any search results in **new browser tabs** using *Ctrl+click* (or *Ctrl+Enter*), which can come handy because there are often duplicate or similar page titles in bookkit books.
+   - There are more search results being displayed (Chrome search bar results are limited to 12).
+   - You can copy the address of the link in the search result (or anything you can do with a link on a regular web page).
+     
+![uuGle UI](uugle-ui.png)
 
-Book pages index is permanently stored in the browser's [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) database. **uuGle** uses
+## How it works
+
+- Book pages index is permanently stored in the browser's [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) database. **uuGle** uses
 [Elasticlunr.js](http://elasticlunr.com/) for fast and user friendly searching.
-
-Every indexed book is being re-indexed after some time once you open it to keep index of pages up-to-date.
+- Every indexed book is being re-indexed after some time once you open it again to keep uuGle index of pages up-to-date.
 
 ## Install extension
 Install from [uuGle Chrome Web Store page](https://chrome.google.com/webstore/detail/uugle/makckafajckddaiinilmeogejgdmacmi)
@@ -32,11 +41,11 @@ Install from [uuGle Chrome Web Store page](https://chrome.google.com/webstore/de
 
 ## Road map
 1. GUI to control book indexing - delete index, reindex single book etc.
-1. automatic indexing of unvisited books from some catalog like https://docs.unicorn.com/books
+1. Automatic pre-indexing of books from some online catalogue, so you don't need to open every book first individually to index it.  
 
 # Development guide
 
-<span style="color:red">Use following guide for extension **development** only, for common extension usage see previous lines.</span>  
+<span style="color:red">Use the following lines for extension **development only**, you don't need to read it for regular extension usage.</span>  
 
 # Chrome Extension Boilerplate with React 16.13 and Webpack 4
 
