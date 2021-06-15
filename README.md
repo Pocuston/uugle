@@ -24,11 +24,7 @@ Book pages index is permanently stored in the browser's [IndexedDB](https://deve
 Every indexed book is being re-indexed after some time once you open it to keep index of pages up-to-date.
 
 ## Install extension
-Plugin is not available in official Chrome store yet, so it must be installed from local directory.
-1. Download extension package from [latest release](https://github.com/Pocuston/uugle/releases/) and extract it to empty directory. 
-1. Go to [chrome://extensions/](chrome://extensions/)
-1. Turn on *Developer mode*
-1. Use Load *Unpacked button* and point to directory with extracted package from pont 1.
+Install from [uuGle Chrome Web Store page](https://chrome.google.com/webstore/detail/uugle/makckafajckddaiinilmeogejgdmacmi)
 
 ## Constraints   
 1. Only page title is being indexed. Fulltext content searching is not available.
