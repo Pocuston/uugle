@@ -6,6 +6,7 @@
 
 ## Usage 
 
+1. Install uuGle from [uuGle Chrome Web Store page](https://chrome.google.com/webstore/detail/uugle/makckafajckddaiinilmeogejgdmacmi)
 1. **uuGle** automatically indexes every Unicorn bookkit book you open. Just open a single page of any book, and a list of all the pages
     in that book will be indexed and available for quick search anytime in the future.
    - **uuGle** indexes only **page title and book name** for searching, not whole page content (**uuGle** does not provide fulltext search).
