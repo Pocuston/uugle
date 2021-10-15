@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Search from "@material-ui/icons/Search";
 import { List, InputAdornment, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import "./Popup.css";
 import PageListItem from "./PageListItem";
 
 const useStyles = makeStyles(theme => ({
@@ -28,6 +27,14 @@ function Popup() {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  //TODO smazat
+  useEffect(() => {
+    chrome.runtime.sendMessage(
+      { messageType: "searchRequest", data: { query: "uu5" } },
+      handleSearchResponse
+    );
+  });
+
   function handleSearchResponse(response) {
     setSearchResults(response.results);
     setSelectedIndex(0);
@@ -41,8 +48,8 @@ function Popup() {
     );
   }
 
-  function handlePageClick(page, newTab) {
-    openPage(page, newTab);
+  function handleLinkClick(url, newTab) {
+    openUrl(url, newTab);
   }
 
   function handleKeyDown(event) {
@@ -58,19 +65,21 @@ function Popup() {
       });
     } else if (event.key === "Enter") {
       if (searchResults[selectedIndex] !== undefined) {
-        openPage(searchResults[selectedIndex], event.ctrlKey);
+        const selectedPage = searchResults[selectedIndex];
+        openUrl(selectedPage.url, event.ctrlKey);
       }
     }
   }
 
-  function openPage(page, newTab) {
-    //we do not use standard href with page url to be able to open links in background tabs and to search popup remain open
+  //TODO volat pro vsechny odkazy
+  function openUrl(url, newTab) {
+    //we do not use standard href with page url to be able to open multiple links on background tabs and to search popup remain open
     if (newTab) {
-      chrome.tabs.create({ url: page.url, active: false });
+      chrome.tabs.create({ url, active: false });
     } else {
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const tab = tabs[0];
-        chrome.tabs.update(tab.id, { url: page.url });
+        chrome.tabs.update(tab.id, { url });
       });
     }
   }
@@ -98,7 +107,7 @@ function Popup() {
           <PageListItem
             page={page}
             selected={index === selectedIndex}
-            onClick={handlePageClick}
+            onLinkClick={handleLinkClick}
           />
         ))}
       </List>

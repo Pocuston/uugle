@@ -63,3 +63,19 @@ export function getTestSuggestion(page) {
     url: getPageUrl(page),
   });
 }
+
+/**
+ * Replaces first occurrence of item by @predicate function by @replacement function.
+ * Returns shallow copy of array.
+ * @param array
+ * @param predicate predicate function to find item to be replaced
+ * @param replacement replacement function taking original item as parameter
+ */
+export function replaceInArray(array, predicate, replacement) {
+  const result = [...array];
+  const indexToBeReplaced = result.findIndex(predicate);
+  if (indexToBeReplaced > -1) {
+    result[indexToBeReplaced] = replacement(result[indexToBeReplaced]);
+  }
+  return result;
+}

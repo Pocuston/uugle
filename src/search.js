@@ -35,6 +35,15 @@ export function getPageUrl(page) {
 }
 
 /**
+ * Returns book home URL
+ * @param page
+ * @returns {string}
+ */
+export function getBookUrl(page) {
+  return `${pageUrlBase}/${page.awid}`;
+}
+
+/**
  * Fulltext search in index
  * @param {string} query
  */
@@ -83,7 +92,7 @@ export async function search(query) {
     indexResults.map(indexDoc => {
       return requestToPromise(pagesStore.get(parseInt(indexDoc.ref)))
         .then(page => {
-          return { ...page, url: getPageUrl(page) };
+          return { ...page, url: getPageUrl(page), bookUrl: getBookUrl(page) };
         })
         .catch(error => {
           console.error("uuGle: error loading page:", indexDoc.ref, error);

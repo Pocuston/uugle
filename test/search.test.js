@@ -1,10 +1,10 @@
 import FDBFactory from "fake-indexeddb/lib/FDBFactory";
 import {
   uu5BookData,
+  uu5BookNewMenuItems,
   uu5BookNewPages,
-  uu5BookNewPagesItemMap,
   uu5BookPages,
-  uu5BookRemovedPagesItemMap,
+  uu5BookRemovedMenuItems,
   uuAppFrameworkBookData,
   uuAppFrameworkBookPages,
 } from "./testData";
@@ -47,11 +47,9 @@ test("After reindex new pages can be found", async () => {
 
   await indexBook({
     ...uu5BookData,
-    getBookStructure: {
-      itemMap: {
-        ...uu5BookData.getBookStructure.itemMap,
-        ...uu5BookNewPagesItemMap,
-      },
+    loadBook: {
+      ...uu5BookData.loadBook,
+      menu: [...uu5BookData.loadBook.menu, ...uu5BookNewMenuItems],
     },
   });
 
@@ -73,8 +71,9 @@ test("After reindex removed pages can be no longer found", async () => {
 
   await indexBook({
     ...uu5BookData,
-    getBookStructure: {
-      itemMap: uu5BookRemovedPagesItemMap,
+    loadBook: {
+      ...uu5BookData.loadBook,
+      menu: [...uu5BookRemovedMenuItems],
     },
   });
 

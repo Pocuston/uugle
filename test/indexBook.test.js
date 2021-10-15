@@ -3,21 +3,22 @@ import {
   uu5Book,
   uu5BookData,
   uu5BookNewPages,
-  uu5BookNewPagesItemMap,
+  uu5BookNewMenuItems,
   uu5BookPages,
   uu5BookRemovedPages,
-  uu5BookRemovedPagesItemMap,
   uuAppFrameworkBook,
   uuAppFrameworkBookData,
   uuAppFrameworkBookPages,
+  uu5BookRemovedMenuItems,
 } from "./testData";
 import {
   getBooks,
   getPages,
   forceBookToBeReIndexed,
   comparePages,
+  replaceInArray,
 } from "./testUtils";
-import indexBook from "../src/indexBook";
+import indexBook, { createBreadcrumbFromPage } from "../src/indexBook";
 import { initialize } from "../src/searchIndex";
 import { beforeEach, test } from "@jest/globals";
 
@@ -71,7 +72,7 @@ test("Reindex does not recreate existing pages", async () => {
   expect(pagesAfterReindex).toEqual(pagesBeforeReindex);
 });
 
-test("Reindex adds new pages ane keeps existing", async () => {
+test("Reindex adds new pages and keeps all existing untouched", async () => {
   await indexBook(uu5BookData);
   const pagesBeforeReindex = await getPages();
 
@@ -80,11 +81,9 @@ test("Reindex adds new pages ane keeps existing", async () => {
 
   await indexBook({
     ...uu5BookData,
-    getBookStructure: {
-      itemMap: {
-        ...uu5BookData.getBookStructure.itemMap,
-        ...uu5BookNewPagesItemMap,
-      },
+    loadBook: {
+      ...uu5BookData.loadBook,
+      menu: [...uu5BookData.loadBook.menu, ...uu5BookNewMenuItems],
     },
   });
 
@@ -110,17 +109,17 @@ test("Reindex removes deleted pages", async () => {
 
   await indexBook({
     ...uu5BookData,
-    getBookStructure: {
-      itemMap: uu5BookRemovedPagesItemMap,
+    loadBook: {
+      ...uu5BookData.loadBook,
+      menu: [...uu5BookRemovedMenuItems],
     },
   });
 
   const pagesAfterReindex = await getPages();
-  expect(pagesAfterReindex).toEqual(
-    uu5BookRemovedPages
-      .sort(comparePages)
-      .map(page => expect.objectContaining(page))
-  );
+  const expectedPages = uu5BookRemovedPages
+    .sort(comparePages)
+    .map(page => expect.objectContaining(page));
+  expect(pagesAfterReindex).toEqual(expectedPages);
 });
 
 test("When the page name is changed, it should be changed in index after the reindexing is done", async () => {
@@ -131,26 +130,51 @@ test("When the page name is changed, it should be changed in index after the rei
 
   await indexBook({
     ...uu5BookData,
-    getBookStructure: {
-      itemMap: {
-        ...uu5BookData.getBookStructure.itemMap,
-        UU5BricksAccordion: {
-          label: { en: "UU5.Bricks.Accordion - updated!" },
-        },
-      },
+    loadBook: {
+      ...uu5BookData.loadBook,
+      menu: replaceInArray(
+        uu5BookData.loadBook.menu,
+        item => item.page === "UU5BricksAccordion",
+        item => ({ ...item, label: { en: "UU5.Bricks.Accordion - updated!" } })
+      ),
     },
   });
 
-  const updatedPages = [...uu5BookPages];
-  updatedPages[1] = {
-    name: "uu5 g04 - User Guide > UU5.Bricks.Accordion - updated!",
-    awid: "ed11ec379073476db0aa295ad6c00178",
-    code: "UU5BricksAccordion",
-  };
+  const updatedPages = replaceInArray(
+    uu5BookPages,
+    item => item.code === "UU5BricksAccordion",
+    item => ({
+      ...item,
+      name: "uu5 g04 - User Guide > UU5.Bricks.Accordion - updated!",
+    })
+  );
 
   const pagesAfterReindex = await getPages();
+  const expectedPages = updatedPages
+    .sort(comparePages)
+    .map(page => expect.objectContaining(page));
 
-  expect(pagesAfterReindex).toEqual(
-    updatedPages.sort(comparePages).map(page => expect.objectContaining(page))
-  );
+  expect(pagesAfterReindex).toEqual(expectedPages);
+});
+
+test("Pages have correct breadcrumbs", async () => {
+  await indexBook(uu5BookData);
+
+  const pages = await getPages();
+
+  expect(pages.find(page => page.code === "36615176").breadcrumbs).toEqual([]);
+  expect(
+    pages.find(page => page.code === "UU5BricksAccordion").breadcrumbs
+  ).toEqual([
+    createBreadcrumbFromPage(pages.find(page => page.code === "36615176")),
+  ]);
+  expect(
+    pages.find(page => page.code === "UU5BricksModal").breadcrumbs
+  ).toEqual([
+    createBreadcrumbFromPage(pages.find(page => page.code === "36615176")),
+    createBreadcrumbFromPage(
+      pages.find(page => page.code === "UU5BricksAccordion")
+    ),
+  ]);
+  expect(pages.find(page => page.code === "useEffect").breadcrumbs).toEqual([]);
 });

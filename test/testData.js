@@ -6,45 +6,61 @@ export const uu5BookData = {
     name: {
       en: "uu5 g04 - User Guide",
     },
-  },
-  getBookStructure: {
-    itemMap: {
-      "36615176": {
+    menu: [
+      {
         label: { en: "Validation" },
+        page: "36615176",
+        indent: 0,
       },
-      UU5BricksAccordion: {
+      {
         label: { en: "UU5.Bricks.Accordion", cs: "UU5.Bricks.Accordion" },
+        page: "UU5BricksAccordion",
+        indent: 1,
       },
-      UU5BricksModal: {
+      {
         label: { en: "UU5.Bricks.Modal", cs: "UU5.Bricks.Modal" },
+        page: "UU5BricksModal",
+        indent: 2,
       },
-      useEffect: {
+      {
         label: { en: "useEffect" },
+        page: "useEffect",
+        indent: 0,
       },
-    },
+    ],
   },
 };
 
-export const uu5BookNewPagesItemMap = {
-  "01713935": {
+export const uu5BookNewMenuItems = [
+  {
+    page: "01713935",
     label: { en: "UX Forms - Best Practices" },
+    indent: 0,
   },
-  useState: {
+  {
+    page: "useState",
     label: { en: "useState", cs: "useState" },
+    indent: 0,
   },
-  useContext: {
+  {
+    page: "useContext",
     label: { en: "useContext", cs: "useContext" },
+    indent: 0,
   },
-};
+];
 
-export const uu5BookRemovedPagesItemMap = {
-  UU5BricksAccordion: {
+export const uu5BookRemovedMenuItems = [
+  {
+    page: "UU5BricksAccordion",
     label: { en: "UU5.Bricks.Accordion", cs: "UU5.Bricks.Accordion" },
+    indent: 0,
   },
-  UU5BricksModal: {
+  {
+    page: "UU5BricksModal",
     label: { en: "UU5.Bricks.Modal", cs: "UU5.Bricks.Modal" },
+    indent: 0,
   },
-};
+];
 
 export const uu5Book = {
   name: "uu5 g04 - User Guide",
@@ -56,21 +72,25 @@ export const uu5BookPages = [
     name: "uu5 g04 - User Guide > Validation",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "36615176",
+    //breadcrumbs: [],
   },
   {
     name: "uu5 g04 - User Guide > UU5.Bricks.Accordion",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "UU5BricksAccordion",
+    //breadcrumbs: [],
   },
   {
     name: "uu5 g04 - User Guide > UU5.Bricks.Modal",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "UU5BricksModal",
+    //breadcrumbs: [],
   },
   {
     name: "uu5 g04 - User Guide > useEffect",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "useEffect",
+    //breadcrumbs: [],
   },
 ];
 
@@ -113,19 +133,23 @@ export const uuAppFrameworkBookData = {
     name: {
       en: "uuApp Framework",
     },
-  },
-  getBookStructure: {
-    itemMap: {
-      validation_00: {
+    menu: [
+      {
         label: { en: "Validation", cs: "Validation" },
+        page: "validation_00",
+        indent: 0,
       },
-      uuAppObjectStore_00: {
+      {
         label: { en: "uuAppObjectStore", cs: "uuAppObjectStore" },
+        page: "uuAppObjectStore_00",
+        indent: 1,
       },
-      sysGetHealth_00: {
+      {
         label: { en: "sys/getHealth (uuCmd)", cs: "sys/getHealth (uuCmd)" },
+        page: "sysGetHealth_00",
+        indent: 0,
       },
-    },
+    ],
   },
 };
 

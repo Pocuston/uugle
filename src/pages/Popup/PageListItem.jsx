@@ -1,7 +1,13 @@
-import { Link, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import BookmarkTwoToneIcon from "@material-ui/icons/BookmarkTwoTone";
+import {
+  Link,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@material-ui/core";
 import React, { useLayoutEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import iconImage from "../../assets/img/icon-16.png";
 
 const useStyles = makeStyles(theme => ({
   listIconItem: {
@@ -12,9 +18,18 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.grey.A700,
     fontSize: "1.2rem",
   },
+  pageLink: {
+    fontWeight: "500",
+  },
+  breadcrumb: {
+    color: theme.palette.grey.A700,
+  },
+  listItemIconImage: {
+    opacity: 0.8,
+  },
 }));
 
-export default function PageListItem({ page, selected, onClick }) {
+export default function PageListItem({ page, selected, onLinkClick }) {
   const classes = useStyles();
   const selectedLisItemRef = useRef();
 
@@ -28,28 +43,75 @@ export default function PageListItem({ page, selected, onClick }) {
     }
   }, [selected]);
 
-  function handlePageClick(event) {
-    onClick(page, event.ctrlKey);
+  function handleLinkClick(event, url) {
+    onLinkClick(url, event.ctrlKey);
     event.preventDefault();
+    event.stopPropagation();
   }
 
   return (
     <ListItem
-      onClick={handlePageClick}
       key={`${page.awid}/${page.code}`}
       button
       disableGutters
       selected={selected}
       ref={selected ? selectedLisItemRef : null}
+      alignItems={"flex-start"}
+      onClick={event => handleLinkClick(event, page.url)}
     >
       <ListItemIcon classes={{ root: classes.listIconItem }}>
-        <BookmarkTwoToneIcon className={classes.pageIcon} />
+        <img
+          src={iconImage}
+          width={16}
+          height={16}
+          className={classes.listItemIconImage}
+          alt={"Book page icon"}
+        />
       </ListItemIcon>
       <ListItemText
         primary={
-          <Link title={page.url} href={page.url}>
+          <Link
+            title={page.url}
+            href={page.url}
+            className={classes.pageLink}
+            onClick={event => handleLinkClick(event, page.url)}
+          >
+            {page.bookName && `${page.bookName} - `}
             {page.name}
           </Link>
+        }
+        secondary={
+          <Typography variant={"caption"} className={classes.breadcrumb}>
+            {page.bookName && page.bookUrl && (
+              <Link
+                title={page.bookUrl}
+                href={page.bookUrl}
+                onClick={event => handleLinkClick(event, page.bookUrl)}
+              >
+                {page.bookName}
+              </Link>
+            )}{" "}
+            {page.breadcrumbs &&
+              page.breadcrumbs.map(breadcrumb => {
+                const breadcrumbUrl = getBreadcrumbUrl(
+                  page.bookUrl,
+                  breadcrumb.code
+                );
+                return (
+                  <>
+                    >{" "}
+                    <Link
+                      title={breadcrumbUrl}
+                      href={breadcrumbUrl}
+                      onClick={event => handleLinkClick(event, breadcrumbUrl)}
+                    >
+                      {" "}
+                      {breadcrumb.name}{" "}
+                    </Link>
+                  </>
+                );
+              })}
+          </Typography>
         }
       />
     </ListItem>
@@ -65,4 +127,8 @@ function isElementInViewport(element) {
       (window.innerHeight || document.documentElement.clientHeight) &&
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
+}
+
+function getBreadcrumbUrl(bookUrl, code) {
+  return `${bookUrl}/book/page?code=${code}`;
 }
