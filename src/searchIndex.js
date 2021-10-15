@@ -30,8 +30,6 @@ export async function initialize() {
 
   searchIndex = await loadIndexFromDb(transaction);
   console.log("uuGle: index initialized");
-
-  //TODO vypsat seznam knizek do konzole
 }
 
 /**
@@ -46,6 +44,7 @@ async function loadIndexFromDb(transaction) {
     let index = elasticlunr(function () {
       this.setRef("id");
       this.addField("name");
+      this.addField("bookName");
       this.saveDocument(saveDocumentInIndex);
     });
     console.log("uuGle: index not found in db");

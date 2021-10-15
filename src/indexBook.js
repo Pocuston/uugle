@@ -27,7 +27,7 @@ export default async function indexBook(bookData) {
   );
 
   transaction.onerror = () => {
-    console.error("uuGle: book indexing error", transaction.error);
+    console.error("uuGle: book indexing error");
   };
 
   const booksStore = transaction.objectStore(booksScheme);
@@ -101,7 +101,7 @@ function getBookByAwid(bookStore, awid) {
 
 async function getBookPages(awid, pagesStore) {
   const index = pagesStore.index("awid");
-  return await requestToPromise(index.getAll(awid));
+  return requestToPromise(index.getAll(awid));
 }
 
 function comparePages(pageA, pageB) {
@@ -136,7 +136,11 @@ async function applyChangePatch(patch, pagesStore) {
   await Promise.all(
     pagesToAdd.map(page => {
       return requestToPromise(pagesStore.add(page)).then(pageId => {
-        const indexDoc = { id: pageId, name: page.name };
+        const indexDoc = {
+          id: pageId,
+          name: page.name,
+          bookName: page.bookName,
+        };
         searchIndex.addDoc(indexDoc);
       });
     })
@@ -154,17 +158,52 @@ function createNewBookObject(bookData, awid, lastUpdate) {
 }
 
 function getPageList(bookData, bookId, awid) {
-  const { name, primaryLanguage } = bookData.loadBook;
-  const { itemMap } = bookData.getBookStructure;
+  const { name, primaryLanguage, menu } = bookData.loadBook;
 
-  //TODO doplnit cestu
-  return Object.entries(itemMap).map(itemPair => {
-    const [code, item] = itemPair;
-    return {
+  //TODO stav stranky
+  //TODO smazani knizky
+
+  const pages = [];
+  menu.forEach((menuItem, menuItemIndex) => {
+    const page = {
       bookId,
+      bookName: name[primaryLanguage],
       awid,
-      code,
-      name: name[primaryLanguage] + " > " + item.label[primaryLanguage],
+      code: menuItem.page,
+      name: menuItem.label[primaryLanguage],
+      breadcrumbs: getBreadcrumbs(pages, menu, menuItem, menuItemIndex),
     };
+    pages.push(page);
   });
+
+  return pages;
+}
+
+function getBreadcrumbs(pages, menu, menuItem, menuItemIndex) {
+  if (menuItem.indent === 0) {
+    return [];
+  }
+
+  for (let i = menuItemIndex - 1; i >= 0; i--) {
+    const prevMenuItem = menu[i];
+    if (prevMenuItem.indent < menuItem.indent) {
+      const parent = pages[i];
+      return [...parent.breadcrumbs, createBreadcrumbFromPage(parent)];
+    }
+  }
+
+  console.error("Could not get breadcrumbs for menu item", menuItem);
+  return [];
+}
+
+/**
+ * Creates breadcrumb from page
+ * @param page
+ * @returns {{code, name}}
+ */
+export function createBreadcrumbFromPage(page) {
+  return {
+    code: page.code,
+    name: page.name,
+  };
 }

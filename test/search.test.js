@@ -1,10 +1,10 @@
 import FDBFactory from "fake-indexeddb/lib/FDBFactory";
 import {
   uu5BookData,
+  uu5BookNewMenuItems,
   uu5BookNewPages,
-  uu5BookNewPagesItemMap,
   uu5BookPages,
-  uu5BookRemovedPagesItemMap,
+  uu5BookRemovedMenuItems,
   uuAppFrameworkBookData,
   uuAppFrameworkBookPages,
 } from "./testData";
@@ -31,12 +31,12 @@ test("Pages from multiple books can be found", async () => {
   const suggest = jest.fn();
   await searchAndSuggest("validation", suggest);
 
-  expect(suggest).toHaveBeenCalledWith(
-    [
-      uuAppFrameworkBookPages.find(page => page.name.includes("Validation")),
-      uu5BookPages.find(page => page.name.includes("Validation")),
-    ].map(page => getTestSuggestion(page))
-  );
+  const expectedSuggestions = [
+    uu5BookPages.find(page => page.code === "36615176"),
+    uuAppFrameworkBookPages.find(page => page.code === "validation_00"),
+  ].map(page => getTestSuggestion(page));
+
+  expect(suggest).toHaveBeenCalledWith(expectedSuggestions);
 });
 
 test("After reindex new pages can be found", async () => {
@@ -47,11 +47,9 @@ test("After reindex new pages can be found", async () => {
 
   await indexBook({
     ...uu5BookData,
-    getBookStructure: {
-      itemMap: {
-        ...uu5BookData.getBookStructure.itemMap,
-        ...uu5BookNewPagesItemMap,
-      },
+    loadBook: {
+      ...uu5BookData.loadBook,
+      menu: [...uu5BookData.loadBook.menu, ...uu5BookNewMenuItems],
     },
   });
 
@@ -73,8 +71,9 @@ test("After reindex removed pages can be no longer found", async () => {
 
   await indexBook({
     ...uu5BookData,
-    getBookStructure: {
-      itemMap: uu5BookRemovedPagesItemMap,
+    loadBook: {
+      ...uu5BookData.loadBook,
+      menu: [...uu5BookRemovedMenuItems],
     },
   });
 
@@ -82,4 +81,21 @@ test("After reindex removed pages can be no longer found", async () => {
   await searchAndSuggest("validation", suggest);
 
   expect(suggest).toHaveBeenCalledWith([]);
+});
+
+test("Pages can be searched also by book name", async () => {
+  await indexBook(uu5BookData);
+  await indexBook(uuAppFrameworkBookData);
+
+  const suggest = jest.fn();
+  await searchAndSuggest("uu5", suggest);
+
+  const expectedSuggestions = [
+    uu5BookPages.find(page => page.code === "UU5BricksAccordion"),
+    uu5BookPages.find(page => page.code === "UU5BricksModal"),
+    uu5BookPages.find(page => page.code === "36615176"),
+    uu5BookPages.find(page => page.code === "useEffect"),
+  ].map(page => getTestSuggestion(page));
+
+  expect(suggest).toHaveBeenCalledWith(expectedSuggestions);
 });
