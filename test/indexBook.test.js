@@ -145,7 +145,7 @@ test("When the page name is changed, it should be changed in index after the rei
     item => item.code === "UU5BricksAccordion",
     item => ({
       ...item,
-      name: "uu5 g04 - User Guide > UU5.Bricks.Accordion - updated!",
+      name: "UU5.Bricks.Accordion - updated!",
     })
   );
 

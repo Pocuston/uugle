@@ -46,6 +46,7 @@ async function loadIndexFromDb(transaction) {
     let index = elasticlunr(function () {
       this.setRef("id");
       this.addField("name");
+      this.addField("bookName");
       this.saveDocument(saveDocumentInIndex);
     });
     console.log("uuGle: index not found in db");

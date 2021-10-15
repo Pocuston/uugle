@@ -136,7 +136,11 @@ async function applyChangePatch(patch, pagesStore) {
   await Promise.all(
     pagesToAdd.map(page => {
       return requestToPromise(pagesStore.add(page)).then(pageId => {
-        const indexDoc = { id: pageId, name: page.name };
+        const indexDoc = {
+          id: pageId,
+          name: page.name,
+          bookName: page.bookName,
+        };
         searchIndex.addDoc(indexDoc);
       });
     })
@@ -164,9 +168,10 @@ function getPageList(bookData, bookId, awid) {
   menu.forEach((menuItem, menuItemIndex) => {
     const page = {
       bookId,
+      bookName: name[primaryLanguage],
       awid,
       code: menuItem.page,
-      name: name[primaryLanguage] + " > " + menuItem.label[primaryLanguage],
+      name: menuItem.label[primaryLanguage],
       breadcrumbs: getBreadcrumbs(pages, menu, menuItem, menuItemIndex),
     };
     pages.push(page);

@@ -69,25 +69,29 @@ export const uu5Book = {
 
 export const uu5BookPages = [
   {
-    name: "uu5 g04 - User Guide > Validation",
+    name: "Validation",
+    bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "36615176",
     //breadcrumbs: [],
   },
   {
-    name: "uu5 g04 - User Guide > UU5.Bricks.Accordion",
+    name: "UU5.Bricks.Accordion",
+    bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "UU5BricksAccordion",
     //breadcrumbs: [],
   },
   {
-    name: "uu5 g04 - User Guide > UU5.Bricks.Modal",
+    name: "UU5.Bricks.Modal",
+    bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "UU5BricksModal",
     //breadcrumbs: [],
   },
   {
-    name: "uu5 g04 - User Guide > useEffect",
+    name: "useEffect",
+    bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "useEffect",
     //breadcrumbs: [],
@@ -96,17 +100,20 @@ export const uu5BookPages = [
 
 export const uu5BookNewPages = [
   {
-    name: "uu5 g04 - User Guide > useState",
+    name: "useState",
+    bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "useState",
   },
   {
-    name: "uu5 g04 - User Guide > useContext",
+    name: "useContext",
+    bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "useContext",
   },
   {
-    name: "uu5 g04 - User Guide > UX Forms - Best Practices",
+    name: "UX Forms - Best Practices",
+    bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "01713935",
   },
@@ -114,12 +121,14 @@ export const uu5BookNewPages = [
 
 export const uu5BookRemovedPages = [
   {
-    name: "uu5 g04 - User Guide > UU5.Bricks.Accordion",
+    name: "UU5.Bricks.Accordion",
+    bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "UU5BricksAccordion",
   },
   {
-    name: "uu5 g04 - User Guide > UU5.Bricks.Modal",
+    name: "UU5.Bricks.Modal",
+    bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "UU5BricksModal",
   },
@@ -160,17 +169,20 @@ export const uuAppFrameworkBook = {
 
 export const uuAppFrameworkBookPages = [
   {
-    name: "uuApp Framework > Validation",
+    name: "Validation",
+    bookName: "uuApp Framework",
     awid: "25d3b166760a44b7be70e5c2eb2abaaa",
     code: "validation_00",
   },
   {
-    name: "uuApp Framework > uuAppObjectStore",
+    name: "uuAppObjectStore",
+    bookName: "uuApp Framework",
     awid: "25d3b166760a44b7be70e5c2eb2abaaa",
     code: "uuAppObjectStore_00",
   },
   {
-    name: "uuApp Framework > sys/getHealth (uuCmd)",
+    name: "sys/getHealth (uuCmd)",
+    bookName: "uuApp Framework",
     awid: "25d3b166760a44b7be70e5c2eb2abaaa",
     code: "sysGetHealth_00",
   },
