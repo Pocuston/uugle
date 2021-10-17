@@ -54,14 +54,16 @@ function Popup() {
 
   function handleKeyDown(event) {
     if (event.key === "ArrowDown") {
-      setSelectedIndex(selectedIndex => {
-        const newIndex = selectedIndex + 1;
-        return newIndex < searchResults.length ? newIndex : selectedIndex;
+      setSelectedIndex(currentSelectedIndex => {
+        const newIndex = currentSelectedIndex + 1;
+        return newIndex < searchResults.length
+          ? newIndex
+          : currentSelectedIndex;
       });
     } else if (event.key === "ArrowUp") {
-      setSelectedIndex(selectedIndex => {
-        const newIndex = selectedIndex - 1;
-        return newIndex >= 0 ? newIndex : selectedIndex;
+      setSelectedIndex(currentSelectedIndex => {
+        const newIndex = currentSelectedIndex - 1;
+        return newIndex >= 0 ? newIndex : currentSelectedIndex;
       });
     } else if (event.key === "Enter") {
       if (searchResults[selectedIndex] !== undefined) {

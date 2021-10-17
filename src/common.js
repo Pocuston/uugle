@@ -20,7 +20,7 @@ export async function openDb() {
       db.deleteObjectStore(indexScheme);
     }
 
-    const bookStore = db.createObjectStore(booksScheme, {
+    db.createObjectStore(booksScheme, {
       keyPath: "awid",
     });
 

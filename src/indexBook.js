@@ -161,7 +161,6 @@ function getPageList(bookData, bookId, awid) {
   const { name, primaryLanguage, menu } = bookData.loadBook;
 
   //TODO stav stranky
-  //TODO ikona knizky?
   //TODO smazani knizky
 
   const pages = [];

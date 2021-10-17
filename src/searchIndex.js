@@ -30,8 +30,6 @@ export async function initialize() {
 
   searchIndex = await loadIndexFromDb(transaction);
   console.log("uuGle: index initialized");
-
-  //TODO vypsat seznam knizek do konzole
 }
 
 /**
