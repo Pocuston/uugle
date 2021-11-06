@@ -28,6 +28,9 @@ export const uu5BookData = {
         indent: 0,
       },
     ],
+    theme: {
+      main: "hsla(189,100%,33%,1)",
+    },
   },
 };
 
