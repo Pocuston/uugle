@@ -158,10 +158,9 @@ function createNewBookObject(bookData, awid, lastUpdate) {
 }
 
 function getPageList(bookData, bookId, awid) {
-  const { name, primaryLanguage, menu } = bookData.loadBook;
+  const { name, primaryLanguage, menu, theme } = bookData.loadBook;
 
   //TODO stav stranky
-  //TODO smazani knizky
 
   const pages = [];
   menu.forEach((menuItem, menuItemIndex) => {
@@ -172,6 +171,7 @@ function getPageList(bookData, bookId, awid) {
       code: menuItem.page,
       name: menuItem.label[primaryLanguage],
       breadcrumbs: getBreadcrumbs(pages, menu, menuItem, menuItemIndex),
+      color: theme?.main,
     };
     pages.push(page);
   });
@@ -179,6 +179,14 @@ function getPageList(bookData, bookId, awid) {
   return pages;
 }
 
+/**
+ * Creates list of breadcrumb pages from menu items
+ * @param pages list of already created pages
+ * @param menu menu structure from loadBook response data
+ * @param menuItem current menu item
+ * @param menuItemIndex current menu item index
+ * @returns {*[]} list of breadcrumb pages
+ */
 function getBreadcrumbs(pages, menu, menuItem, menuItemIndex) {
   if (menuItem.indent === 0) {
     return [];
