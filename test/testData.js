@@ -32,6 +32,22 @@ export const uu5BookData = {
       main: "hsla(189,100%,33%,1)",
     },
   },
+  getBookStructure: {
+    itemMap: {
+      "36615176": {
+        state: "active",
+      },
+      UU5BricksAccordion: {
+        state: "active",
+      },
+      UU5BricksModal: {
+        state: "underConstruction",
+      },
+      useEffect: {
+        state: "underConstruction",
+      },
+    },
+  },
 };
 
 export const uu5BookNewMenuItems = [
@@ -76,6 +92,8 @@ export const uu5BookPages = [
     bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "36615176",
+    color: "hsla(189,100%,33%,1)",
+    state: "active",
     //breadcrumbs: [],
   },
   {
@@ -83,6 +101,8 @@ export const uu5BookPages = [
     bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "UU5BricksAccordion",
+    color: "hsla(189,100%,33%,1)",
+    state: "active",
     //breadcrumbs: [],
   },
   {
@@ -90,6 +110,8 @@ export const uu5BookPages = [
     bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "UU5BricksModal",
+    color: "hsla(189,100%,33%,1)",
+    state: "underConstruction",
     //breadcrumbs: [],
   },
   {
@@ -97,6 +119,8 @@ export const uu5BookPages = [
     bookName: "uu5 g04 - User Guide",
     awid: "ed11ec379073476db0aa295ad6c00178",
     code: "useEffect",
+    color: "hsla(189,100%,33%,1)",
+    state: "underConstruction",
     //breadcrumbs: [],
   },
 ];
@@ -162,6 +186,19 @@ export const uuAppFrameworkBookData = {
         indent: 0,
       },
     ],
+  },
+  getBookStructure: {
+    itemMap: {
+      validation_00: {
+        state: "active",
+      },
+      UU5BricksAccordion: {
+        state: "uuAppObjectStore_00",
+      },
+      UU5BricksModal: {
+        state: "sysGetHealth_00",
+      },
+    },
   },
 };
 

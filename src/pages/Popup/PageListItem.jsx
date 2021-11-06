@@ -1,6 +1,7 @@
 import { Link, ListItem, ListItemText, Typography } from "@material-ui/core";
 import React, { useLayoutEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import PageState from "./PageState";
 
 const useStyles = makeStyles(theme => ({
   listIconItem: {
@@ -56,15 +57,18 @@ export default function PageListItem({ page, selected, onLinkClick }) {
     >
       <ListItemText
         primary={
-          <Link
-            title={page.url}
-            href={page.url}
-            className={classes.pageLink}
-            onClick={event => handleLinkClick(event, page.url)}
-          >
-            {page.bookName && `${page.bookName} - `}
-            {page.name}
-          </Link>
+          <>
+            <Link
+              title={page.url}
+              href={page.url}
+              className={classes.pageLink}
+              onClick={event => handleLinkClick(event, page.url)}
+            >
+              {page.bookName && `${page.bookName} - `}
+              {page.name}
+            </Link>
+            <PageState state={page.state} />
+          </>
         }
         secondary={
           <Typography variant={"caption"}>

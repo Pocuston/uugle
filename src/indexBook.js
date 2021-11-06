@@ -105,7 +105,12 @@ async function getBookPages(awid, pagesStore) {
 }
 
 function comparePages(pageA, pageB) {
-  return pageA.code === pageB.code && pageA.name === pageB.name;
+  return (
+    pageA.code === pageB.code &&
+    pageA.name === pageB.name &&
+    pageA.bookName === pageB.bookName &&
+    pageA.state === pageB.state
+  );
 }
 
 async function applyChangePatch(patch, pagesStore) {
@@ -159,6 +164,7 @@ function createNewBookObject(bookData, awid, lastUpdate) {
 
 function getPageList(bookData, bookId, awid) {
   const { name, primaryLanguage, menu, theme } = bookData.loadBook;
+  const { itemMap } = bookData.getBookStructure;
 
   //TODO stav stranky
 
@@ -172,6 +178,7 @@ function getPageList(bookData, bookId, awid) {
       name: menuItem.label[primaryLanguage],
       breadcrumbs: getBreadcrumbs(pages, menu, menuItem, menuItemIndex),
       color: theme?.main,
+      state: itemMap[menuItem.page]?.state,
     };
     pages.push(page);
   });
