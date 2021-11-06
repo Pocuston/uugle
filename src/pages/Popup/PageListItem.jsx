@@ -1,14 +1,7 @@
-import {
-  Link,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@material-ui/core";
+import { Link, ListItem, ListItemText, Typography } from "@material-ui/core";
 import React, { useLayoutEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import KeyboardArrowRightIcon from "@material-ui/icons/ArrowRight";
-import iconImage from "../../assets/img/icon-16.png";
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -61,15 +54,6 @@ export default function PageListItem({ page, selected, onLinkClick }) {
       onClick={event => handleLinkClick(event, page.url)}
       style={{ paddingLeft: "16px" }}
     >
-      <ListItemIcon classes={{ root: classes.listIconItem }}>
-        <img
-          src={iconImage}
-          width={16}
-          height={16}
-          className={classes.listItemIconImage}
-          alt={"Book page icon"}
-        />
-      </ListItemIcon>
       <ListItemText
         primary={
           <Link

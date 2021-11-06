@@ -65,7 +65,6 @@ function Popup() {
     }
   }
 
-  //TODO volat pro vsechny odkazy
   function openUrl(url, newTab) {
     //we do not use standard href with page url to be able to open multiple links on background tabs and to search popup remain open
     if (newTab) {
