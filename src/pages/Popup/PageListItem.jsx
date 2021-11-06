@@ -14,16 +14,17 @@ const useStyles = makeStyles(theme => ({
   listItem: {
     paddingLeft: "8px",
   },
-  pageLink: {
+  pageLink: ({ color }) => ({
     fontWeight: "500",
-  },
-  breadcrumb: {
-    color: theme.palette.grey.A700,
-  },
+    color,
+  }),
+  breadcrumbLink: ({ color }) => ({
+    color: color,
+  }),
 }));
 
 export default function PageListItem({ page, selected, onLinkClick }) {
-  const classes = useStyles();
+  const classes = useStyles({ color: page.color });
   const selectedLisItemRef = useRef();
 
   useLayoutEffect(() => {
@@ -58,6 +59,7 @@ export default function PageListItem({ page, selected, onLinkClick }) {
       ref={selected ? selectedLisItemRef : null}
       alignItems={"flex-start"}
       onClick={event => handleLinkClick(event, page.url)}
+      style={{ paddingLeft: "16px" }}
     >
       <ListItemIcon classes={{ root: classes.listIconItem }}>
         <img
@@ -81,12 +83,13 @@ export default function PageListItem({ page, selected, onLinkClick }) {
           </Link>
         }
         secondary={
-          <Typography variant={"caption"} className={classes.breadcrumb}>
+          <Typography variant={"caption"}>
             {showHomeLink() && (
               <Link
                 title={page.bookUrl}
                 href={page.bookUrl}
                 onClick={event => handleLinkClick(event, page.bookUrl)}
+                className={classes.breadcrumbLink}
               >
                 Home
               </Link>
@@ -107,6 +110,7 @@ export default function PageListItem({ page, selected, onLinkClick }) {
                       title={breadcrumbUrl}
                       href={breadcrumbUrl}
                       onClick={event => handleLinkClick(event, breadcrumbUrl)}
+                      className={classes.breadcrumbLink}
                     >
                       {breadcrumb.name}
                     </Link>

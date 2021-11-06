@@ -178,3 +178,13 @@ test("Pages have correct breadcrumbs", async () => {
   ]);
   expect(pages.find(page => page.code === "useEffect").breadcrumbs).toEqual([]);
 });
+
+test("Pages have correct color", async () => {
+  await indexBook(uu5BookData);
+
+  const pages = await getPages();
+
+  pages.forEach(page =>
+    expect(page.color).toEqual(uu5BookData.loadBook.theme.main)
+  );
+});
