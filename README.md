@@ -1,37 +1,44 @@
 # uuGle
 
-**uuGle** Chrome extension for fast and user friendly search in Unicorn bookkit and dockit books.
+**uuGle** Chrome extension for fast and user-friendly search in Unicorn uuBookKit books.
 
 ![demo](https://i.imgur.com/S1FX6zm.gif)
 
 ## Usage 
 
 1. Install uuGle from [uuGle Chrome Web Store page](https://chrome.google.com/webstore/detail/uugle/makckafajckddaiinilmeogejgdmacmi)
-1. **uuGle** automatically indexes every Unicorn bookkit book you open. Just open a single page of any book, and a list of all the pages
-    in that book will be indexed and available for quick search anytime in the future.
-   - **uuGle** indexes only **page title and book name** for searching, not whole page content (**uuGle** does not provide fulltext search).
-   - It does not matter which specific page of book you open (home page is quite enough), all pages of the book you are permitted to are indexed. 
-     
-1. Type "*uu*" in search bar on any browser tab to switch to **uuGle** search in indexed books. Once in **uuGle** search mode, type any word from page or book title. Most relevant searches are being instantly suggested as you type.
-    - You don't need to type whole word, search results are automatically expanded for you (e.g. type just "trans" and search results containing word "transaction" will be suggested).
-    - Suggestions are sorted from the most relevant at the top.
-    - For each suggestion you can see target book page URL.
-1. Select suggestion and the corresponding book page will open in currently active browser tab.
-   
-### Alternative way of searching using uuGle UI
-You can start searching using **uuGle UI** by clicking on the extension icon or using **keyboard shortcut** (*Ctrl+Shift+U* on Windows, *Ctrl+U* on Linux, *Command+U* on Mac).
-This way, you take advantage of the standard Chrome search bar, like:
-   - You can open any search results in **new browser tabs** using *Ctrl+click* (or *Ctrl+Enter*), which can come handy because there are often duplicate or similar page titles in bookkit books.
-   - There are more search results being displayed (Chrome search bar results are limited to 12).
-   - You can copy the address of the link in the search result (or anything you can do with a link on a regular web page).
-     
+2. **uuGle** automatically indexes every Unicorn bookkit book you open. Just open any single page of any book, and a 
+   list of all the pages in that book will be indexed and for search.
+   - **uuGle is not fulltext search** - it indexes only **page title and book name**, not a whole page content.
+   - It does not matter which page of book you open (home page is quite enough), all pages of that book are indexed.
+3. Click extension icon or use **keyboard shortcut** <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd> on Windows,
+   <kbd>Ctrl</kbd>+<kbd>U</kbd> on Linux, <kbd>Command</kbd>+<kbd>U</kbd> on 
+   Mac.
+   - Type a keyword to start search in indexed content.
+   - You don't need to type whole word, search words are automatically expanded. E.g. type "trans" and search 
+     results containing word "transaction" will be suggested. This can be used to quickly find uuCommand designs: e.g. 
+     type "trans list" to search for transaction/list CMD.  
+   - Search results are sorted by relevance in descending order
+   - When too many results across many books are found, try adding the tile of the product, application or component
+     to the search query.   
+4. For each page found, there is a link to that page. By default, the link opens in currently selected tab. You can 
+   <kbd>Ctrl</kbd>+<kbd>Click</kbd> to open it in new browser tab. 
+   - Color of page link corresponds to book type (i.e. user guide, application model, business model etc.)
+   - Breadcrumb navigation is available to better differentiate pages with a similar or identical name. Each link to 
+     page ancestor in menu hierarchy can be clicked to open in currently selected tab or in new tab 
+     (<kbd>Ctrl</kbd>+<kbd>Click</kbd>).
+   - There is a **_w_** icon next to page title to indicate "_work in progress_" status of that page.
+5. You can use <kbd>&#8593;</kbd> and <kbd>&#8595;</kbd> keys to navigate in search results. To open page link you can 
+   use <kbd>Enter</kbd> to open it in the currently selected tab, or <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to open it in new 
+   browser tab.
+6. Every indexed book is being re-indexed after some time once you open it again to keep your uuGle page index up-to-date.
+    
 ![uuGle UI](uugle-ui.png)
 
 ## How it works
 
-- Book pages index is permanently stored in the browser's [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) database. **uuGle** uses
-[Elasticlunr.js](http://elasticlunr.com/) for fast and user friendly searching.
-- Every indexed book is being re-indexed after some time once you open it again to keep uuGle index of pages up-to-date.
+- Book pages index is permanently stored in the browser's [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) database.
+- For searching **uuGle** uses [Elasticlunr.js](http://elasticlunr.com/).
 
 ## Install extension
 Install from [uuGle Chrome Web Store page](https://chrome.google.com/webstore/detail/uugle/makckafajckddaiinilmeogejgdmacmi)
