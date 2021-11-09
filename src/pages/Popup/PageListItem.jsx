@@ -15,6 +15,13 @@ const useStyles = makeStyles(theme => ({
   breadcrumbLink: ({ color }) => ({
     color: color,
   }),
+  breadcrumbSection: {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "inline-block",
+    maxWidth: "600px",
+  },
 }));
 
 export default function PageListItem({ page, selected, onLinkClick }) {
@@ -71,7 +78,7 @@ export default function PageListItem({ page, selected, onLinkClick }) {
           </>
         }
         secondary={
-          <Typography variant={"caption"}>
+          <Typography variant={"caption"} className={classes.breadcrumbSection}>
             {showHomeLink() && (
               <Link
                 title={page.bookUrl}
