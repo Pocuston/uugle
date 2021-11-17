@@ -2,7 +2,7 @@
 
 **uuGle** Chrome extension for fast and user-friendly search in Unicorn uuBookKit books.
 
-![demo](https://i.imgur.com/S1FX6zm.gif)
+![demo](https://i.imgur.com/jnZJtxs.gif)
 
 ## Usage 
 
@@ -32,8 +32,6 @@
    use <kbd>Enter</kbd> to open it in the currently selected tab, or <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to open it in new 
    browser tab.
 6. Every indexed book is being re-indexed after some time once you open it again to keep your uuGle page index up-to-date.
-    
-![uuGle UI](uugle-ui.png)
 
 ## How it works
 
