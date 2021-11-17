@@ -15,13 +15,16 @@ const pageUrlBase = "https://uuapp.plus4u.net/uu-bookkit-maing01";
 
 /**
  * Creates omnibox suggestion from page info
- * @param {{name: string, awid: string, code: string}} page
+ * @param {{name: string, awid: string, code: string, bookName: string, url: string}} page
  * @returns {{description: string, content: *}}
  */
 export function getSuggestion(page) {
+  const pageTitle = page.bookName
+    ? `${page.bookName} - ${page.name}`
+    : page.name;
   return {
     content: page.url,
-    description: `${escapeHtml(page.name)} - <url>${page.url}</url>`,
+    description: `${escapeHtml(pageTitle)} - <url>${page.url}</url>`,
   };
 }
 
