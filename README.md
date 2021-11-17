@@ -40,11 +40,7 @@
 - Book pages index is permanently stored in the browser's [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) database.
 - For searching **uuGle** uses [Elasticlunr.js](http://elasticlunr.com/).
 
-## Install extension
-Install from [uuGle Chrome Web Store page](https://chrome.google.com/webstore/detail/uugle/makckafajckddaiinilmeogejgdmacmi)
-
-## Constraints   
-1. Only page title is being indexed. Fulltext content searching is not available.
+## Constraints
 1. Only english language fulltext search is supported.
 
 ## Road map
