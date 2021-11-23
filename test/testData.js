@@ -22,11 +22,12 @@ export const uu5BookData = {
         page: "UU5BricksModal",
         indent: 2,
       },
-      {
-        label: { en: "useEffect" },
-        page: "useEffect",
-        indent: 0,
-      },
+      //This item is deliberately commented to test, that even when page is not in menu, it is still indexed from getBookStructure
+      // {
+      //   label: { en: "useEffect" },
+      //   page: "useEffect",
+      //   indent: 0,
+      // },
     ],
     theme: {
       main: "hsla(189,100%,33%,1)",
@@ -35,15 +36,19 @@ export const uu5BookData = {
   getBookStructure: {
     itemMap: {
       "36615176": {
+        label: { en: "Validation" },
         state: "active",
       },
       UU5BricksAccordion: {
+        label: { en: "UU5.Bricks.Accordion", cs: "UU5.Bricks.Accordion" },
         state: "active",
       },
       UU5BricksModal: {
+        label: { en: "UU5.Bricks.Modal", cs: "UU5.Bricks.Modal" },
         state: "underConstruction",
       },
       useEffect: {
+        label: { en: "useEffect" },
         state: "underConstruction",
       },
     },
@@ -68,7 +73,7 @@ export const uu5BookNewMenuItems = [
   },
 ];
 
-export const uu5BookRemovedMenuItems = [
+export const uu5BookUpdatedMenuItems = [
   {
     page: "UU5BricksAccordion",
     label: { en: "UU5.Bricks.Accordion", cs: "UU5.Bricks.Accordion" },
@@ -146,7 +151,7 @@ export const uu5BookNewPages = [
   },
 ];
 
-export const uu5BookRemovedPages = [
+export const uu5BookUpdatedPages = [
   {
     name: "UU5.Bricks.Accordion",
     bookName: "uu5 g04 - User Guide",
@@ -190,13 +195,13 @@ export const uuAppFrameworkBookData = {
   getBookStructure: {
     itemMap: {
       validation_00: {
-        state: "active",
+        label: { en: "Validation", cs: "Validation" },
       },
-      UU5BricksAccordion: {
-        state: "uuAppObjectStore_00",
+      uuAppObjectStore_00: {
+        label: { en: "uuAppObjectStore", cs: "uuAppObjectStore" },
       },
-      UU5BricksModal: {
-        state: "sysGetHealth_00",
+      sysGetHealth_00: {
+        label: { en: "sys/getHealth (uuCmd)", cs: "sys/getHealth (uuCmd)" },
       },
     },
   },

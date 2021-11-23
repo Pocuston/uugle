@@ -164,23 +164,49 @@ function createNewBookObject(bookData, awid, lastUpdate) {
 
 function getPageList(bookData, bookId, awid) {
   const { name, primaryLanguage, menu, theme } = bookData.loadBook;
-  const { itemMap } = bookData.getBookStructure;
-
-  //TODO stav stranky
+  const itemMap = { ...bookData.getBookStructure.itemMap };
+  const bookName = name[primaryLanguage];
+  const color = theme?.main;
 
   const pages = [];
+
+  //first, we iterate pages in menu, because from there we can assemble breadcrumbs
   menu.forEach((menuItem, menuItemIndex) => {
-    const page = {
+    const pageFromItemMap = itemMap[menuItem.page];
+
+    const pageFromMenu = {
       bookId,
-      bookName: name[primaryLanguage],
+      bookName,
       awid,
       code: menuItem.page,
       name: menuItem.label[primaryLanguage],
       breadcrumbs: getBreadcrumbs(pages, menu, menuItem, menuItemIndex),
-      color: theme?.main,
-      state: itemMap[menuItem.page]?.state,
+      color,
+      state: pageFromItemMap?.state,
     };
-    pages.push(page);
+
+    //once page from menu is processed, we delete it from itemMap so we do not index it in duplicite
+    if (pageFromItemMap) {
+      delete itemMap[menuItem.page];
+    }
+
+    pages.push(pageFromMenu);
+  });
+
+  //not every page is in menu, so we need to go through itemMap as well for remaining set of pages
+  Object.entries(itemMap).map(itemPair => {
+    const [code, item] = itemPair;
+    const pageFromItemMap = {
+      bookId,
+      bookName,
+      awid,
+      code,
+      name: item.label[primaryLanguage],
+      breadcrumbs: [],
+      color,
+      state: item.state,
+    };
+    pages.push(pageFromItemMap);
   });
 
   return pages;

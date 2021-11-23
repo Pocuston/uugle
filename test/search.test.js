@@ -4,7 +4,7 @@ import {
   uu5BookNewMenuItems,
   uu5BookNewPages,
   uu5BookPages,
-  uu5BookRemovedMenuItems,
+  uu5BookUpdatedMenuItems,
   uuAppFrameworkBookData,
   uuAppFrameworkBookPages,
 } from "./testData";
@@ -73,7 +73,10 @@ test("After reindex removed pages can be no longer found", async () => {
     ...uu5BookData,
     loadBook: {
       ...uu5BookData.loadBook,
-      menu: [...uu5BookRemovedMenuItems],
+      menu: [...uu5BookUpdatedMenuItems],
+    },
+    getBookStructure: {
+      itemMap: {},
     },
   });
 

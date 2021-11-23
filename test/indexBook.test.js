@@ -5,11 +5,11 @@ import {
   uu5BookNewPages,
   uu5BookNewMenuItems,
   uu5BookPages,
-  uu5BookRemovedPages,
+  uu5BookUpdatedPages,
   uuAppFrameworkBook,
   uuAppFrameworkBookData,
   uuAppFrameworkBookPages,
-  uu5BookRemovedMenuItems,
+  uu5BookUpdatedMenuItems,
 } from "./testData";
 import {
   getBooks,
@@ -111,12 +111,15 @@ test("Reindex removes deleted pages", async () => {
     ...uu5BookData,
     loadBook: {
       ...uu5BookData.loadBook,
-      menu: [...uu5BookRemovedMenuItems],
+      menu: [...uu5BookUpdatedMenuItems],
+    },
+    getBookStructure: {
+      itemMap: {},
     },
   });
 
   const pagesAfterReindex = await getPages();
-  const expectedPages = uu5BookRemovedPages
+  const expectedPages = uu5BookUpdatedPages
     .sort(comparePages)
     .map(page => expect.objectContaining(page));
   expect(pagesAfterReindex).toEqual(expectedPages);
