@@ -39,6 +39,9 @@ console.log("uuGle: inject script is running");
       if (response.url.includes("loadBook")) {
         console.log(`uuGle: intercepted loadBook response`);
         bookData.loadBook = await response.clone().json();
+      } else if (response.url.includes("sys/uuAppWorkspace/load")) {
+        console.log(`uuGle: intercepted sys/uuAppWorkspace/load response`);
+        bookData.loadBook = (await response.clone().json()).data;
       } else if (response.url.includes("getBookStructure")) {
         console.log(`uuGle: intercepted getBookStructure response`);
         bookData.getBookStructure = await response.clone().json();
